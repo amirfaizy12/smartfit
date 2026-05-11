@@ -1,0 +1,80 @@
+<section class="login text-second text-start pt-16">
+    <div class="m-auto grid lg:grid-cols-2 gap-20 pt-2">
+        <div class="md:w-2/3 lg:w-[90%] m-auto py-12 lg:px-12">
+
+            <h1 class="text-3xl font-semibold main-head my-3">Create New Password</h1>
+            <p class="text-gray-600">Your new password must be different from previous used password.</p>
+
+            <form [formGroup]="repassForm" (ngSubmit)="submitPassword()" class="text-start mt-10">
+
+                <!-- New Password -->
+                <div class="mb-3">
+                    <label class="block mb-2 text-sm font-medium text-gray-600">New Password:</label>
+                    <input formControlName="password" type="password"
+                        class="bg-white rounded-xl focus:shadow-sm focus:shadow-prime border-prime text-heading text-sm block w-full px-3 py-2.5 shadow-xs placeholder:text-gray-500"
+                        placeholder="Enter New Password" />
+                    <p *ngIf="repassForm.get('password')?.touched && repassForm.get('password')?.hasError('required')"
+                        class="text-red-500 text-xs mt-1">Password is required.</p>
+                    <p *ngIf="repassForm.get('password')?.touched && repassForm.get('password')?.hasError('minlength')"
+                        class="text-red-500 text-xs mt-1">At least 10 characters.</p>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="mb-3">
+                    <label class="block mb-2 text-sm font-medium text-gray-600">Confirm New Password:</label>
+                    <input formControlName="confirmPassword" type="password"
+                        class="bg-white rounded-xl focus:shadow-sm focus:shadow-prime border-prime text-heading text-sm block w-full px-3 py-2.5 shadow-xs placeholder:text-gray-500"
+                        placeholder="Confirm New Password" />
+                    <p *ngIf="repassForm.get('confirmPassword')?.touched && repassForm.hasError('passwordMismatch')"
+                        class="text-red-500 text-xs mt-1">Passwords do not match.</p>
+                </div>
+
+                <!-- Password Requirements -->
+                <h2 class="mb-2 text-lg font-medium text-heading">Password requirements:</h2>
+                <ul class="max-w-md space-y-1 text-body list-inside mb-4">
+                    <li class="flex items-center">
+                        <svg class="w-4 h-4 me-1.5 shrink-0" [class]="hasMinLength ? 'text-green-500' : 'text-gray-400'"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                            viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        At least 10 characters
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-4 h-4 me-1.5 shrink-0" [class]="hasLowercase ? 'text-green-500' : 'text-gray-400'"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                            viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        At least one lowercase character
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-4 h-4 me-1.5 shrink-0"
+                            [class]="hasSpecialChar ? 'text-green-500' : 'text-gray-400'" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        At least one special character, e.g., ! &#64; # ?
+                    </li>
+                </ul>
+
+                <button type="submit" class="w-full text-white capitalize text-xl px-2 py-3 rounded-xl bg-prime my-6">
+                    Update Password
+                </button>
+
+            </form>
+        </div>
+
+        <div class="quate-img relative text-start hidden lg:block min-h-[calc(100vh-100px)]">
+            <div
+                class="quate-text p-4 bg-[#14263F] border-[.3px] border-gray-200 rounded-2xl w-1/2 lg:absolute bottom-16 start-1/2 -translate-x-1/2">
+                <i class="fa-solid fa-quote-right text-prime text-2xl"></i>
+                <q class="font-semibold text-white text-2xl block">The only way to finish is to start. Your evolution begins with every small choise.</q>
+                <p class="text-gray-200 pt-4"><span class="pe-2">-</span> Amir Faizy , SmartFit Project Manager</p>
+            </div>
+        </div>
+    </div>
+</section>

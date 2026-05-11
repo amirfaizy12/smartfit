@@ -1,0 +1,172 @@
+.main-hero {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/bg1.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+h1 {
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+}
+
+h1::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+
+    width: 100%;
+    height: 15px;
+
+    background: var(--main-color);
+    z-index: -1;
+
+}
+
+.hero-img img {
+    width: 40%;
+}
+
+.img-1 {
+
+    top: -5%;
+    left: 22%;
+
+}
+
+.img-2 {
+
+    top: 10%;
+    left: 35%;
+}
+
+.hero-img .img-3 {
+    width: 47%;
+    top: 20%;
+    left: 47%;
+}
+
+.layer-dash {
+    position: absolute;
+    left: 30px;
+    right: 30px;
+    top: 5%;
+    z-index: 0;
+    height: 450px;
+    background-image: linear-gradient(#000000bd, #000000b1), url(/images/dash/dash2.png);
+    background-size: cover;
+    background-position: center;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.faq {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.589), rgba(255, 255, 255, 0.605)), url('/images/tatpik.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+@media screen and (max-width: 767px) {
+    .hero-img img {
+        width: 30%;
+    }
+
+    .img-1 {
+
+        top: 20%;
+        left: 20%;
+
+    }
+
+    .img-2 {
+
+        top: 35%;
+        left: 30%;
+    }
+
+    .hero-img .img-3 {
+        width: 35%;
+        top: 30%;
+        left: 39%;
+    }
+
+    .layer-dash {
+        left: 10px;
+        right: 10px;
+        height: 300px;
+
+
+    }
+
+    .dashboard li {
+        color: #1d1d1d;
+    }
+
+}
+
+@media screen and (max-width: 580px) {
+
+    .hero-img img {
+        width: 37%;
+    }
+
+    .img-1 {
+
+        top: 20%;
+        left: 17%;
+
+    }
+
+    .img-2 {
+
+        top: 35%;
+        left: 28%;
+    }
+
+    .hero-img .img-3 {
+        width: 43%;
+        top: 30%;
+        left: 35%;
+    }
+
+    .layer-dash {
+        left: 10px;
+        right: 10px;
+        height: 300px;
+    }
+
+}
+
+@media screen and (max-width: 480px) {
+
+    .hero-img img {
+        width: 45%;
+    }
+
+    .img-1 {
+
+        top: 20%;
+        left: 17%;
+
+    }
+
+    .img-2 {
+
+        top: 35%;
+        left: 28%;
+    }
+
+    .hero-img .img-3 {
+        width: 53%;
+        top: 30%;
+        left: 35%;
+    }
+
+    .layer-dash {
+        left: 10px;
+        right: 10px;
+        height: 300px;
+    }
+
+}

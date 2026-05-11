@@ -1,0 +1,220 @@
+<div class="min-h-screen bg-gray-50">
+
+    <!-- Navbar -->
+    <nav class="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between">
+        <span class="text-blue-600 font-bold text-xl tracking-tight">AuraFit</span>
+        <div class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
+            <a href="#" class="hover:text-blue-600 transition-colors">Dashboard</a>
+            <a href="#" class="hover:text-blue-600 transition-colors">Workouts</a>
+            <a href="#" class="hover:text-blue-600 transition-colors">Nutrition</a>
+            <a href="#" class="hover:text-blue-600 transition-colors">Insights</a>
+            <a href="#" class="hover:text-blue-600 transition-colors">Community</a>
+        </div>
+        <div class="flex items-center gap-3">
+            <button class="text-gray-500 hover:text-gray-700">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <button
+                class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+                Go Premium
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Body -->
+    <div class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6">
+
+        <!-- Sidebar -->
+        <aside class="space-y-4">
+
+            <!-- Profile Card -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm text-center">
+                <div class="relative w-32 h-32 mx-auto mb-4">
+                    <img [src]="user.avatar" alt="avatar"
+                        class="w-full h-full rounded-full object-cover border-4 border-white shadow-md" />
+
+                    <!-- Hidden File Input -->
+                    <input #fileInput type="file" accept="image/*" class="hidden" (change)="onImageSelected($event)" />
+
+                    <!-- Camera Button -->
+                    <button type="button" (click)="fileInput.click()"
+                        class="absolute bottom-1 right-1 bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center shadow hover:bg-blue-700 transition-colors">
+                        <i class="fa-solid fa-camera text-xs"></i>
+                    </button>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-900">{{ user.name }}</h2>
+                <p class="text-blue-500 text-sm font-medium mt-1 flex items-center justify-center gap-1">
+                    <i class="fa-solid fa-medal text-xs"></i> {{ user.badge }}
+                </p>
+                <p class="text-gray-500 text-sm mt-3 leading-relaxed">{{ user.bio }}</p>
+                <a routerLink="/edite-Profile"
+                    class="mt-5 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-xl flex items-center justify-center gap-2 transition-colors">
+                    <i class="fa-solid fa-pen text-xs"></i> Edit Profile
+                </a>
+                <button (click)="logout()"
+                    class="mt-2 w-full border border-red-400 text-red-500 hover:bg-red-50 font-medium py-2.5 rounded-xl flex items-center justify-center gap-2 transition-colors">
+                    <i class="fa-solid fa-right-from-bracket text-xs"></i> Logout
+                </button>
+            </div>
+
+            <!-- Active Badges -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm">
+                <h3 class="text-sm font-semibold text-gray-700 mb-4">Active Badges</h3>
+                <div class="flex gap-3">
+                    @for (badge of badges; track badge.label) {
+                    <div class="w-16 h-16 rounded-xl border border-gray-100 bg-gray-50 flex items-center justify-center cursor-pointer hover:shadow-md transition-shadow group relative"
+                        [title]="badge.label">
+                        <i [class]="badge.icon + ' text-xl ' + badge.color"></i>
+                        <span
+                            class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                            {{ badge.label }}
+                        </span>
+                    </div>
+                    }
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- Main Content -->
+        <main class="space-y-5">
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                @for (stat of stats; track stat.label) {
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                    <i [class]="stat.icon + ' text-gray-400 text-lg mb-3 block'"></i>
+                    <p class="text-gray-500 text-sm">{{ stat.label }}</p>
+                    <p class="text-3xl font-bold text-gray-900 mt-1">
+                        {{ stat.value }}
+                        <span class="text-lg font-medium text-gray-500">{{ stat.unit }}</span>
+                    </p>
+                    <p [class]="'text-xs mt-1 ' + stat.subColor">{{ stat.sub }}</p>
+                </div>
+                }
+            </div>
+
+            <!-- Performance Analytics -->
+            <!-- Weight Chart -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900">Weight Trend</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">kg</p>
+                    </div>
+                    <div class="flex gap-1">
+                        @for (tab of tabs; track tab) {
+                        <button (click)="switchWeightTab(tab)" [class]="'px-3 py-1 text-xs font-medium rounded-lg transition-colors ' +
+          (activeWeightTab === tab ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-500 hover:bg-gray-200')">
+                            {{ tab }}
+                        </button>
+                        }
+                    </div>
+                </div>
+
+                <!-- Summary Cards -->
+                <div class="flex gap-3 mb-4">
+                    <div class="bg-gray-50 rounded-xl px-4 py-2.5">
+                        <p class="text-xs text-gray-400">Current</p>
+                        <p class="text-xl font-bold text-gray-900 mt-0.5">88.5 kg</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-xl px-4 py-2.5">
+                        <p class="text-xs text-gray-400">Change</p>
+                        <p class="text-xl font-bold text-green-500 mt-0.5">-2.4 kg</p>
+                    </div>
+                </div>
+
+                <div class="h-44">
+                    <canvas id="weightChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Calories Chart -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900">Daily Calories</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">kcal burned</p>
+                    </div>
+                    <div class="flex gap-1">
+                        @for (tab of tabs; track tab) {
+                        <button (click)="switchCalTab(tab)" [class]="'px-3 py-1 text-xs font-medium rounded-lg transition-colors ' +
+          (activeCalTab === tab ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-500 hover:bg-gray-200')">
+                            {{ tab }}
+                        </button>
+                        }
+                    </div>
+                </div>
+
+                <!-- Summary Cards -->
+                <div class="flex gap-3 mb-4">
+                    <div class="bg-gray-50 rounded-xl px-4 py-2.5">
+                        <p class="text-xs text-gray-400">Avg / day</p>
+                        <p class="text-xl font-bold text-gray-900 mt-0.5">484 kcal</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-xl px-4 py-2.5">
+                        <p class="text-xs text-gray-400">Best day</p>
+                        <p class="text-xl font-bold text-amber-500 mt-0.5">640 kcal</p>
+                    </div>
+                </div>
+
+                <div class="h-44">
+                    <canvas id="calChart"></canvas>
+                </div>
+            </div>
+            <!-- Recent Logs -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h3 class="text-lg font-bold text-gray-900 mb-5">Recent Logs</h3>
+                <div class="space-y-4">
+                    @for (log of logs; track log.name; let last = $last) {
+                    <div class="flex items-center justify-between py-3" [class.border-b]="!last"
+                        [class.border-gray-100]="!last">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center shrink-0">
+                                <i [class]="log.icon + ' text-gray-600'"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900 text-sm">{{ log.name }}</p>
+                                <p class="text-gray-400 text-xs mt-0.5">{{ log.date }} • {{ log.duration }}</p>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <p class="font-semibold text-gray-900 text-sm">{{ log.kcal }} kcal</p>
+                            @if (log.tag === 'New PR') {
+                            <p class="text-xs mt-0.5 text-blue-500">{{ log.tag }}</p>
+                            } @else {
+                            <p class="text-xs mt-0.5 text-gray-400">{{ log.tag }}</p>
+                            }
+                        </div>
+                    </div>
+                    }
+
+                    @empty {
+                    <p class="text-center text-gray-400 text-sm py-4">No logs yet.</p>
+                    }
+
+                </div>
+                <div class="text-center mt-4">
+                    <button class="text-blue-500 hover:text-blue-700 text-sm font-medium transition-colors">
+                        View Full History
+                    </button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer
+        class="border-t border-gray-200 bg-white px-8 py-6 mt-4 flex flex-col md:flex-row justify-between items-center gap-4">
+        <span class="text-gray-900 font-bold text-lg">AuraFit</span>
+        <div class="flex gap-6 text-gray-400 text-sm">
+            <a href="#" class="hover:text-gray-600 transition-colors">Privacy Policy</a>
+            <a href="#" class="hover:text-gray-600 transition-colors">Terms of Service</a>
+            <a href="#" class="hover:text-gray-600 transition-colors">Contact Support</a>
+            <a href="#" class="hover:text-gray-600 transition-colors">API Documentation</a>
+        </div>
+        <span class="text-gray-400 text-xs">© 2024 AuraFit Performance. All rights reserved.</span>
+    </footer>
+
+</div>

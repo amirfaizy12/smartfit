@@ -1,0 +1,152 @@
+<section class="min-h-screen bg-[#0d1117] text-white pt-16">
+
+
+
+    <!-- Main Content -->
+    <div class="grid lg:grid-cols-2 min-h-[calc(100vh-64px)]">
+
+        <!-- Left Side -->
+        <div class="flex flex-col justify-center px-10 py-16 lg:px-16">
+            <p class="glass">
+                PERFORMANCE FIRST
+            </p>
+            <h1 class="text-3xl lg:text-6xl font-extrabold main-head w-fit my-6">
+                Elevate your<br /><span class="text-white">baseline.</span>
+            </h1>
+            <p class="text-gray-400 text-base mb-10 max-w-sm">
+                Experience a new standard of athletic intelligence with our technical, data-driven ecosystem.
+            </p>
+
+            <!-- Features -->
+            <div class="space-y-6 mb-10">
+                <div class="flex items-start gap-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-lightbulb text-prime"></i>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-white text-sm">AI Insights</p>
+                        <p class="text-gray-500 text-xs mt-1">Surgical precision in your workout analysis using neural
+                            patterns to optimize recovery cycles.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center shrink-0">
+                        <i class="fa-regular fa-user text-prime"></i>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-white text-sm">3D Body Tracking</p>
+                        <p class="text-gray-500 text-xs mt-1">High-fidelity kinematic capture technology to refine form
+                            and prevent injury in real-time.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rounded-2xl overflow-hidden w-full max-w-sm  bg-gray-800">
+                <img src="/images/bg1.jpg" alt="Gym" class="w-full h-full  grayscale opacity-80" />
+            </div>
+        </div>
+
+        <!-- Right Side - Form -->
+        <div class="flex items-center justify-center px-4 py-12 lg:px-12">
+            <div class="bg-white text-gray-900 rounded-2xl p-6 sm:p-8 w-full max-w-lg shadow-2xl overflow-hidden">
+
+                <h2 class="text-3xl font-bold mb-1">Create Your Account</h2>
+                <p class="text-gray-500 text-sm mb-7">Join AuraFit and start your data-driven journey.</p>
+
+                <form [formGroup]="registerForm" (ngSubmit)="submitRegister()" class="space-y-5">
+
+                    <!-- Full Name & Email Row -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                            <input formControlName="fullName" type="text"
+                                class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-400"
+                                placeholder="Amir faizy" />
+                            <p *ngIf="f['fullName'].touched && f['fullName'].hasError('required')"
+                                class="text-red-500 text-xs mt-1">Name is required.</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                            <input formControlName="email" type="email"
+                                class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-400"
+                                placeholder="amirfaizy11@gmail.com" />
+                            <p *ngIf="f['email'].touched && f['email'].hasError('required')"
+                                class="text-red-500 text-xs mt-1">Email is required.</p>
+                            <p *ngIf="f['email'].touched && f['email'].hasError('email')"
+                                class="text-red-500 text-xs mt-1">Invalid email.</p>
+                        </div>
+                    </div>
+
+                <!-- Password  -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <div class="relative">
+                            <input formControlName="password" [type]="showPassword ? 'text' : 'password'"
+                                class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-400"
+                                placeholder="••••••••••" />
+                            <button type="button" (click)="showPassword = !showPassword"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                <svg *ngIf="!showPassword" class="w-5 h-5" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                <svg *ngIf="showPassword" class="w-5 h-5" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                                </svg>
+                            </button>
+                        </div>
+                        <p *ngIf="f['password'].touched && f['password'].hasError('required')"
+                            class="text-red-500 text-xs mt-1">Password is required.</p>
+                        <p *ngIf="f['password'].touched && f['password'].hasError('minlength')"
+                            class="text-red-500 text-xs mt-1">At least 10 characters.</p>
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                        <input formControlName="confirmPassword" type="password"
+                            class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-400"
+                            placeholder="••••••••••" />
+                        <p *ngIf="f['confirmPassword'].touched && registerForm.hasError('passwordMismatch')"
+                            class="text-red-500 text-xs mt-1">Passwords do not match.</p>
+                    </div>
+
+                    <!-- Terms -->
+                    <div class="flex items-center gap-2">
+                        <input formControlName="terms" type="checkbox" id="terms"
+                            class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+                        <label for="terms" class="text-sm text-gray-600">
+                            I agree to the <a href="#" class="text-blue-600 hover:underline">Terms and Conditions</a>
+                        </label>
+                    </div>
+                    <p *ngIf="f['terms'].touched && f['terms'].hasError('requiredTrue')"
+                        class="text-red-500 text-xs -mt-3">You must agree to the terms.</p>
+
+                    <!-- Submit -->
+                    <button type="submit"
+                        class="w-full main-btn">
+                        Create Account
+                        
+                    </button>
+
+                    <!-- Divider -->
+
+
+                    <!-- Social Buttons -->
+                    <app-repassword [loginPage]="false"></app-repassword>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+</section>

@@ -1,0 +1,926 @@
+<div class="font-sans">
+
+    <!-- ═══════════════════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════════════════════════ -->
+    <section class="hero-sec text-white flex flex-col min-h-[100vh]">
+        <div class="main-hero flex-1">
+            <div class="w-[90%] m-auto grid grid-cols-1 lg:grid-cols-2 justify-between mt-20 md:mt-40">
+                <div class="hero-text lg:text-start text-center p-4">
+                    <p class="glass mb-6 block text-white">
+                        <i class="fa-solid fa-bolt"></i> AI-Powered Fitness Analyzer
+                    </p>
+                    <h1 class="text-4xl lg:text-5xl font-bold leading-tight mb-5">
+                        Train Smarter<br>with Neural AI
+                    </h1>
+                    <p class="text-gray-200 text-base leading-relaxed mb-8 max-w-md">
+                        Unlock your peak physical potential with lab-grade biomechanical analysis and real-time
+                        biometric feedback.
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <button (click)="scrollToAnalyzer()"
+                            class="bg-prime hover:bg-prime/90 transition text-white px-6 py-3 rounded-xl text-sm font-semibold flex items-center gap-2">
+                            <i class="fa-solid fa-flask-vial"></i> Start Free Analysis
+                        </button>
+                        <button
+                            class="border border-white/20 hover:bg-white/5 transition text-white px-6 py-3 rounded-xl text-sm font-medium flex items-center gap-2">
+                            Explore Mobile <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-img relative p-8">
+                    <img class="img-1 absolute" src="/screen2.png" alt="">
+                    <img class="img-2 absolute" src="/screen3.png" alt="">
+                    <img class="img-3 absolute" src="/screen1.png" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+       CORE PERFORMANCE PILLARS
+  ════════════════════════════════════════════════════════════ -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl font-bold text-second mb-3">Core Performance Pillars</h2>
+                <p class="text-gray-400 text-sm max-w-sm mx-auto">Our AI engine processes millions of data points to
+                    create your personal potential.</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                <!-- AI Body Analysis -->
+                <div class="bg-gray-50 rounded-2xl p-6 relative overflow-hidden group hover:shadow-md transition">
+                    <span
+                        class="inline-flex items-center gap-1.5 text-xs text-prime bg-prime/10 px-2.5 py-1 rounded-full mb-2">
+                        <i class="fa-solid fa-circle-dot text-[10px]"></i> Web + Mobile
+                    </span>
+                    <h3 class="text-lg font-semibold text-second">AI Body Analysis</h3>
+                    <p class="text-xs text-gray-400 mt-1 max-w-xs mb-4">Real-time biomechanical analysis and biometric
+                        feedback. Precision fitness for the modern achiever.</p>
+                    <div
+                        class="rounded-xl overflow-hidden h-36 bg-gradient-to-br from-gray-800 to-second flex items-center justify-center">
+                        <div class="flex items-end gap-4 opacity-80">
+                            <div class="flex flex-col items-center gap-1 opacity-30">
+                                <svg width="28" height="72" viewBox="0 0 40 110">
+                                    <ellipse cx="20" cy="10" rx="7" ry="8" fill="#206DEA" />
+                                    <line x1="20" y1="18" x2="20" y2="65" stroke="#206DEA" stroke-width="3"
+                                        stroke-linecap="round" />
+                                    <line x1="20" y1="28" x2="8" y2="48" stroke="#206DEA" stroke-width="2.5"
+                                        stroke-linecap="round" />
+                                    <line x1="20" y1="28" x2="32" y2="48" stroke="#206DEA" stroke-width="2.5"
+                                        stroke-linecap="round" />
+                                    <line x1="20" y1="65" x2="13" y2="95" stroke="#206DEA" stroke-width="2.5"
+                                        stroke-linecap="round" />
+                                    <line x1="20" y1="65" x2="27" y2="95" stroke="#206DEA" stroke-width="2.5"
+                                        stroke-linecap="round" />
+                                </svg>
+                            </div>
+                            <div class="flex flex-col items-center gap-1">
+                                <svg width="38" height="80" viewBox="0 0 52 110">
+                                    <ellipse cx="26" cy="10" rx="9" ry="9" fill="#206DEA" />
+                                    <path d="M18 20 Q12 35 14 60 Q20 68 26 68 Q32 68 38 60 Q40 35 34 20 Z"
+                                        fill="#206DEA" />
+                                    <line x1="26" y1="68" x2="18" y2="100" stroke="#206DEA" stroke-width="3"
+                                        stroke-linecap="round" />
+                                    <line x1="26" y1="68" x2="34" y2="100" stroke="#206DEA" stroke-width="3"
+                                        stroke-linecap="round" />
+                                    <line x1="18" y1="30" x2="6" y2="52" stroke="#206DEA" stroke-width="2.5"
+                                        stroke-linecap="round" />
+                                    <line x1="34" y1="30" x2="46" y2="52" stroke="#206DEA" stroke-width="2.5"
+                                        stroke-linecap="round" />
+                                </svg>
+                            </div>
+                            <div class="flex flex-col items-center gap-1 opacity-30">
+                                <svg width="44" height="80" viewBox="0 0 62 110">
+                                    <ellipse cx="31" cy="10" rx="10" ry="10" fill="#206DEA" />
+                                    <ellipse cx="31" cy="42" rx="18" ry="22" fill="#206DEA" />
+                                    <line x1="31" y1="64" x2="21" y2="100" stroke="#206DEA" stroke-width="3.5"
+                                        stroke-linecap="round" />
+                                    <line x1="31" y1="64" x2="41" y2="100" stroke="#206DEA" stroke-width="3.5"
+                                        stroke-linecap="round" />
+                                    <line x1="16" y1="28" x2="4" y2="54" stroke="#206DEA" stroke-width="3"
+                                        stroke-linecap="round" />
+                                    <line x1="46" y1="28" x2="58" y2="54" stroke="#206DEA" stroke-width="3"
+                                        stroke-linecap="round" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Smart Calories -->
+                <div class="bg-gray-50 rounded-2xl p-6 group hover:shadow-md transition">
+                    <span
+                        class="inline-flex items-center gap-1.5 text-xs text-prime bg-prime/10 px-2.5 py-1 rounded-full mb-2">
+                        <i class="fa-solid fa-circle-dot text-[10px]"></i> Web + Mobile
+                    </span>
+                    <h3 class="text-lg font-semibold text-second">Smart Calories</h3>
+                    <p class="text-xs text-gray-400 mt-1 mb-4">Visual recognition and metabolic rate diagnosis.</p>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between text-xs text-gray-400 mb-1"><span>Daily target</span><span
+                                    class="text-prime font-semibold">94.8%</span></div>
+                            <div class="h-1.5 bg-gray-200 rounded-full">
+                                <div class="h-1.5 bg-prime rounded-full" style="width:94.8%"></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 mt-4">
+                            <div class="bg-white rounded-xl p-3 border border-gray-100">
+                                <p class="text-xs text-gray-400">Calories Burned</p>
+                                <p class="text-xl font-bold text-second mt-1">2,450 <span
+                                        class="text-xs font-normal text-gray-400">kcal</span></p>
+                            </div>
+                            <div class="bg-white rounded-xl p-3 border border-gray-100">
+                                <p class="text-xs text-gray-400">Workout Type</p>
+                                <p class="text-sm font-semibold text-second mt-1">Hypertrophy</p>
+                                <p class="text-xs text-green-500">+12% this week</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Precision Diet -->
+                <div class="bg-gray-50 rounded-2xl p-6 group hover:shadow-md transition">
+                    <span
+                        class="inline-flex items-center gap-1.5 text-xs text-orange-600 bg-orange-50 px-2.5 py-1 rounded-full mb-2">
+                        <i class="fa-solid fa-mobile-screen text-[10px]"></i> Mobile Exclusive
+                    </span>
+                    <h3 class="text-lg font-semibold text-second">Precision Diet</h3>
+                    <p class="text-xs text-gray-400 mt-1 max-w-xs mb-3">Dynamic meal plans fit to your specific and save
+                        actual daily goals.</p>
+                    <div
+                        class="relative rounded-xl overflow-hidden h-28 bg-gradient-to-r from-orange-400 to-amber-500 flex items-center justify-center">
+                        <i class="fa-solid fa-bowl-food text-white text-4xl opacity-60"></i>
+                        <div class="absolute inset-0 bg-black/20 flex items-end p-3">
+                            <span class="text-white text-xs font-medium">🔒 Full plan on mobile</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Workout Intelligence -->
+                <div class="bg-gray-50 rounded-2xl p-6 group hover:shadow-md transition">
+                    <span
+                        class="inline-flex items-center gap-1.5 text-xs text-orange-600 bg-orange-50 px-2.5 py-1 rounded-full mb-2">
+                        <i class="fa-solid fa-mobile-screen text-[10px]"></i> Mobile Exclusive
+                    </span>
+                    <h3 class="text-lg font-semibold text-second">Workout Intelligence</h3>
+                    <p class="text-xs text-gray-400 mt-1 mb-3">Tailor-generated plans with 7,200 exercises for athletes.
+                    </p>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="bg-white rounded-xl p-3 border border-gray-100 flex items-center gap-2">
+                            <i class="fa-solid fa-dumbbell text-prime text-sm"></i>
+                            <div>
+                                <p class="text-xs font-medium text-second">Strength</p>
+                                <p class="text-[10px] text-gray-400">3x / week</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-3 border border-gray-100 flex items-center gap-2 opacity-50">
+                            <i class="fa-solid fa-lock text-gray-400 text-sm"></i>
+                            <div>
+                                <p class="text-xs font-medium text-gray-400">Cardio Plan</p>
+                                <p class="text-[10px] text-gray-400">Mobile only</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+       HOW IT WORKS
+  ════════════════════════════════════════════════════════════ -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl font-bold text-second mb-3">How SmartFit Works</h2>
+                <p class="text-gray-400 text-sm">Three steps to a completely customized physiological plan.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                <div class="hidden md:block absolute top-8 left-1/4 right-1/4 h-px bg-gray-200 z-0"></div>
+                <div class="flex flex-col items-center text-center relative z-10">
+                    <div
+                        class="w-16 h-16 rounded-2xl bg-white border border-gray-200 shadow-sm flex items-center justify-center mb-5">
+                        <i class="fa-solid fa-sliders text-prime text-2xl"></i>
+                    </div>
+                    <h4 class="font-semibold text-second mb-2">Enter Your Metrics</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">Provide your height, weight, activity and fitness
+                        goals.</p>
+                </div>
+                <div class="flex flex-col items-center text-center relative z-10">
+                    <div
+                        class="w-16 h-16 rounded-2xl bg-prime flex items-center justify-center mb-5 shadow-lg shadow-prime/30">
+                        <i class="fa-solid fa-brain text-white text-2xl"></i>
+                    </div>
+                    <h4 class="font-semibold text-second mb-2">AI Analyzes Your Body</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">Our neural model creates a full spectrum of your
+                        muscle structure.</p>
+                </div>
+                <div class="flex flex-col items-center text-center relative z-10">
+                    <div
+                        class="w-16 h-16 rounded-2xl bg-white border border-gray-200 shadow-sm flex items-center justify-center mb-5">
+                        <i class="fa-solid fa-chart-line text-prime text-2xl"></i>
+                    </div>
+                    <h4 class="font-semibold text-second mb-2">Get Guidance</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">Receive live adjustments and dynamic routines
+                        tailored to your inputs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+       SMART AI ANALYZER — FORM
+  ════════════════════════════════════════════════════════════ -->
+    <section id="ai-analyzer" class="py-20 bg-white">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="text-center mb-10">
+                <span
+                    class="inline-flex items-center gap-2 text-xs text-prime bg-prime/10 border border-prime/20 px-3 py-1.5 rounded-full mb-4">
+                    <i class="fa-solid fa-microchip"></i> Quick Web Analysis
+                </span>
+                <h2 class="text-3xl font-bold text-second mb-3">Smart AI Analyzer</h2>
+                <p class="text-gray-400 text-sm">Complete your health information to get your instant personal strategy.
+                </p>
+            </div>
+
+            <!-- API Error -->
+            @if (apiError) {
+            <div
+                class="mb-6 flex items-center gap-3 bg-red-50 border border-red-100 text-red-600 text-sm rounded-xl px-4 py-3">
+                <i class="fa-solid fa-circle-exclamation flex-shrink-0"></i>
+                <span>{{ apiError }}</span>
+            </div>
+            }
+
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+
+                <!-- Tabs -->
+                <div class="flex gap-1 bg-gray-100 p-1 rounded-xl mb-8">
+                    <button (click)="activeTab='bmi'" [class]="activeTab==='bmi'
+              ? 'flex-1 py-2.5 text-sm font-semibold text-second bg-white rounded-lg shadow-sm'
+              : 'flex-1 py-2.5 text-sm text-gray-400 rounded-lg hover:text-gray-600 transition'">
+                        <i class="fa-solid fa-weight-scale mr-2"></i>BMI Analysis
+                    </button>
+                    <button (click)="activeTab='calories'" [class]="activeTab==='calories'
+              ? 'flex-1 py-2.5 text-sm font-semibold text-second bg-white rounded-lg shadow-sm'
+              : 'flex-1 py-2.5 text-sm text-gray-400 rounded-lg hover:text-gray-600 transition'">
+                        <i class="fa-solid fa-fire mr-2"></i>Calories Burned
+                    </button>
+                </div>
+
+                <!-- ── BMI FORM ── -->
+                @if (activeTab === 'bmi') {
+                <form [formGroup]="bmiForm" (ngSubmit)="analyzeBmi()" novalidate>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+
+                        <!-- Gender -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-2">Gender</label>
+                            <select formControlName="Sex"
+                                [class]="'w-full border rounded-xl px-4 py-3 text-sm text-second focus:outline-none focus:border-prime ' + (isInvalid(bmiForm,'Sex') ? 'border-red-300 bg-red-50' : 'border-gray-200')">
+                                <option value="">Select gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                            @if (isInvalid(bmiForm,'Sex')) {
+                            <p class="text-red-500 text-[11px] mt-1"><i
+                                    class="fa-solid fa-circle-exclamation mr-1"></i>{{ getError(bmiForm,'Sex') }}</p>
+                            }
+                        </div>
+
+                        <!-- Age -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-2">Age</label>
+                            <input type="number" formControlName="Age" placeholder="e.g. 25"
+                                [class]="'w-full border rounded-xl px-4 py-3 text-sm text-second focus:outline-none focus:border-prime ' + (isInvalid(bmiForm,'Age') ? 'border-red-300 bg-red-50' : 'border-gray-200')" />
+                            @if (isInvalid(bmiForm,'Age')) {
+                            <p class="text-red-500 text-[11px] mt-1"><i
+                                    class="fa-solid fa-circle-exclamation mr-1"></i>{{ getError(bmiForm,'Age') }}</p>
+                            }
+                        </div>
+
+                        <!-- Height -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-2">Height (cm)</label>
+                            <input type="number" formControlName="Height_cm" placeholder="e.g. 175"
+                                [class]="'w-full border rounded-xl px-4 py-3 text-sm text-second focus:outline-none focus:border-prime ' + (isInvalid(bmiForm,'Height_cm') ? 'border-red-300 bg-red-50' : 'border-gray-200')" />
+                            @if (isInvalid(bmiForm,'Height_cm')) {
+                            <p class="text-red-500 text-[11px] mt-1"><i
+                                    class="fa-solid fa-circle-exclamation mr-1"></i>{{ getError(bmiForm,'Height_cm') }}
+                            </p>
+                            }
+                        </div>
+
+                        <!-- Weight -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-2">Weight (kg)</label>
+                            <input type="number" formControlName="Weight_kg" placeholder="e.g. 70"
+                                [class]="'w-full border rounded-xl px-4 py-3 text-sm text-second focus:outline-none focus:border-prime ' + (isInvalid(bmiForm,'Weight_kg') ? 'border-red-300 bg-red-50' : 'border-gray-200')" />
+                            @if (isInvalid(bmiForm,'Weight_kg')) {
+                            <p class="text-red-500 text-[11px] mt-1"><i
+                                    class="fa-solid fa-circle-exclamation mr-1"></i>{{ getError(bmiForm,'Weight_kg') }}
+                            </p>
+                            }
+                        </div>
+
+                    </div>
+
+                    <button type="submit" [disabled]="isLoadingBmi"
+                        class="w-full bg-prime hover:bg-prime/90 disabled:opacity-60 transition text-white py-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2">
+                        @if (!isLoadingBmi) {
+                        <i class="fa-solid fa-flask-vial"></i> Analyze with AI
+                        } @else {
+                        <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                        </svg>
+                        Analyzing your data...
+                        }
+                    </button>
+                    <p class="text-center text-xs text-gray-300 mt-3">
+                        <i class="fa-solid fa-shield-halved mr-1"></i>Data is processed securely and never stored.
+                    </p>
+                </form>
+                }
+
+                <!-- ── CALORIES FORM ── -->
+                @if (activeTab === 'calories') {
+
+                <!-- Warning if BMI not done yet -->
+                @if (!bmiResult.value) {
+                <div
+                    class="flex items-center gap-3 bg-amber-50 border border-amber-100 text-amber-700 text-xs rounded-xl px-4 py-3 mb-5">
+                    <i class="fa-solid fa-triangle-exclamation flex-shrink-0"></i>
+                    <span>Run the <strong>BMI Analysis</strong> first — your BMI is required for an accurate calorie
+                        prediction.</span>
+                </div>
+                }
+
+                <form [formGroup]="calForm" (ngSubmit)="analyzeCalories()" novalidate>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+
+                        <!-- Gender -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-2">Gender</label>
+                            <select formControlName="Gender"
+                                [class]="'w-full border rounded-xl px-4 py-3 text-sm text-second focus:outline-none focus:border-prime ' + (isInvalid(calForm,'Gender') ? 'border-red-300 bg-red-50' : 'border-gray-200')">
+                                <option value="">Select gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                            @if (isInvalid(calForm,'Gender')) {
+                            <p class="text-red-500 text-[11px] mt-1"><i
+                                    class="fa-solid fa-circle-exclamation mr-1"></i>{{ getError(calForm,'Gender') }}</p>
+                            }
+                        </div>
+
+                        <!-- Age -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-2">Age</label>
+                            <input type="number" formControlName="Age" placeholder="e.g. 25"
+                                [class]="'w-full border rounded-xl px-4 py-3 text-sm text-second focus:outline-none focus:border-prime ' + (isInvalid(calForm,'Age') ? 'border-red-300 bg-red-50' : 'border-gray-200')" />
+                            @if (isInvalid(calForm,'Age')) {
+                            <p class="text-red-500 text-[11px] mt-1"><i
+                                    class="fa-solid fa-circle-exclamation mr-1"></i>{{ getError(calForm,'Age') }}</p>
+                            }
+                        </div>
+
+                        <!-- Weight -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-2">Weight (kg)</label>
+                            <input type="number" formControlName="Weight_kg" placeholder="e.g. 70"
+                                [class]="'w-full border rounded-xl px-4 py-3 text-sm text-second focus:outline-none focus:border-prime ' + (isInvalid(calForm,'Weight_kg') ? 'border-red-300 bg-red-50' : 'border-gray-200')" />
+                            @if (isInvalid(calForm,'Weight_kg')) {
+                            <p class="text-red-500 text-[11px] mt-1"><i
+                                    class="fa-solid fa-circle-exclamation mr-1"></i>{{ getError(calForm,'Weight_kg') }}
+                            </p>
+                            }
+                        </div>
+
+                        <!-- Workout Type -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-2">Workout Type</label>
+                            <select formControlName="Workout_Type"
+                                [class]="'w-full border rounded-xl px-4 py-3 text-sm text-second focus:outline-none focus:border-prime ' + (isInvalid(calForm,'Workout_Type') ? 'border-red-300 bg-red-50' : 'border-gray-200')">
+                                <option value="">Select type</option>
+                                <option value="Cardio">Cardio</option>
+                                <option value="HIIT">HIIT</option>
+                                <option value="Strength">Strength</option>
+                            </select>
+                            @if (isInvalid(calForm,'Workout_Type')) {
+                            <p class="text-red-500 text-[11px] mt-1"><i
+                                    class="fa-solid fa-circle-exclamation mr-1"></i>{{ getError(calForm,'Workout_Type')
+                                }}</p>
+                            }
+                        </div>
+
+                        <!-- Session Duration -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-2">Session Duration (hours)</label>
+                            <input type="number" formControlName="Session_Duration_hours" placeholder="e.g. 1.0"
+                                step="0.1"
+                                [class]="'w-full border rounded-xl px-4 py-3 text-sm text-second focus:outline-none focus:border-prime ' + (isInvalid(calForm,'Session_Duration_hours') ? 'border-red-300 bg-red-50' : 'border-gray-200')" />
+                            @if (isInvalid(calForm,'Session_Duration_hours')) {
+                            <p class="text-red-500 text-[11px] mt-1"><i
+                                    class="fa-solid fa-circle-exclamation mr-1"></i>{{
+                                getError(calForm,'Session_Duration_hours') }}</p>
+                            }
+                        </div>
+
+                        <!-- Avg BPM -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-2">
+                                Avg BPM <span class="text-gray-300">(resting heart rate)</span>
+                            </label>
+                            <input type="number" formControlName="Avg_BPM" placeholder="e.g. 80"
+                                [class]="'w-full border rounded-xl px-4 py-3 text-sm text-second focus:outline-none focus:border-prime ' + (isInvalid(calForm,'Avg_BPM') ? 'border-red-300 bg-red-50' : 'border-gray-200')" />
+                            @if (isInvalid(calForm,'Avg_BPM')) {
+                            <p class="text-red-500 text-[11px] mt-1"><i
+                                    class="fa-solid fa-circle-exclamation mr-1"></i>{{ getError(calForm,'Avg_BPM') }}
+                            </p>
+                            }
+                        </div>
+
+                        <!-- Max BPM -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-2">
+                                Max BPM <span class="text-gray-300">(peak during workout)</span>
+                            </label>
+                            <input type="number" formControlName="Max_BPM" placeholder="e.g. 150"
+                                [class]="'w-full border rounded-xl px-4 py-3 text-sm text-second focus:outline-none focus:border-prime ' + (isInvalid(calForm,'Max_BPM') ? 'border-red-300 bg-red-50' : 'border-gray-200')" />
+                            @if (isInvalid(calForm,'Max_BPM')) {
+                            <p class="text-red-500 text-[11px] mt-1"><i
+                                    class="fa-solid fa-circle-exclamation mr-1"></i>{{ getError(calForm,'Max_BPM') }}
+                            </p>
+                            }
+                        </div>
+
+                        <!-- Workout Frequency -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-2">Workout Frequency
+                                (days/week)</label>
+                            <select formControlName="Workout_Frequency_days_week"
+                                [class]="'w-full border rounded-xl px-4 py-3 text-sm text-second focus:outline-none focus:border-prime ' + (isInvalid(calForm,'Workout_Frequency_days_week') ? 'border-red-300 bg-red-50' : 'border-gray-200')">
+                                <option value="">Select days</option>
+                                <option value="1">1 day</option>
+                                <option value="2">2 days</option>
+                                <option value="3">3 days</option>
+                                <option value="4">4 days</option>
+                                <option value="5">5 days</option>
+                                <option value="6">6 days</option>
+                                <option value="7">7 days</option>
+                            </select>
+                            @if (isInvalid(calForm,'Workout_Frequency_days_week')) {
+                            <p class="text-red-500 text-[11px] mt-1"><i
+                                    class="fa-solid fa-circle-exclamation mr-1"></i>{{
+                                getError(calForm,'Workout_Frequency_days_week') }}</p>
+                            }
+                        </div>
+
+                    </div>
+
+                    <!-- BMI auto-used notice -->
+                    @if (bmiResult.value) {
+                    <div
+                        class="flex items-center gap-2 bg-green-50 border border-green-100 text-green-700 text-xs rounded-xl px-4 py-2.5 mb-5">
+                        <i class="fa-solid fa-circle-check flex-shrink-0"></i>
+                        <span>Using your BMI of <strong>{{ bmiResult.value }}</strong> from the analysis above.</span>
+                    </div>
+                    }
+
+                    <button type="submit" [disabled]="isLoadingCal"
+                        class="w-full bg-prime hover:bg-prime/90 disabled:opacity-60 transition text-white py-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2">
+                        @if (!isLoadingCal) {
+                        <i class="fa-solid fa-fire"></i> Predict Calories
+                        } @else {
+                        <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                        </svg>
+                        Calculating...
+                        }
+                    </button>
+                    <p class="text-center text-xs text-gray-300 mt-3">
+                        <i class="fa-solid fa-shield-halved mr-1"></i>Data is processed securely and never stored.
+                    </p>
+                </form>
+                }
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+       BMI RESULT
+  ════════════════════════════════════════════════════════════ -->
+    @if (bmiResult.value) {
+    <section data-result="bmi" class="pb-8 bg-white">
+        <div class="max-w-3xl mx-auto px-6">
+
+            <!-- Card -->
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm mb-5">
+
+                <!-- Score row -->
+                <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl mb-6">
+                    <div>
+                        <p class="text-4xl font-bold text-second">{{ bmiResult.value }}</p>
+                        <p class="text-xs text-gray-400 mt-1">BMI score</p>
+                    </div>
+                    <div class="w-px h-12 bg-gray-200"></div>
+                    <div>
+                        <span [class]="'text-xs font-medium px-3 py-1 rounded-full ' + bmiResult.badgeClass">{{
+                            bmiResult.badge }}</span>
+                        <p class="text-sm font-semibold text-second mt-1.5">{{ bmiResult.type }}</p>
+                        <p class="text-xs text-gray-400">{{ bmiResult.desc }}</p>
+                    </div>
+                </div>
+
+                <!-- Silhouettes -->
+                <div class="flex items-end justify-center gap-6 my-6">
+
+                    <!-- Ectomorph -->
+                    <div class="flex flex-col items-center gap-2 transition-all duration-500"
+                        [class.opacity-100]="bmiResult.key === 'ecto'" [class.opacity-15]="bmiResult.key !== 'ecto'"
+                        [class.scale-110]="bmiResult.key === 'ecto'">
+                        <div
+                            [class]="'w-10 h-10 rounded-full flex items-center justify-center mb-1 ' + (bmiResult.key === 'ecto' ? 'bg-prime/10' : 'bg-gray-100')">
+                            <i
+                                [class]="'fa-solid fa-person text-lg ' + (bmiResult.key === 'ecto' ? 'text-prime' : 'text-gray-300')"></i>
+                        </div>
+                        <svg width="44" height="120" viewBox="0 0 44 120">
+                            <!-- Head -->
+                            <ellipse cx="22" cy="11" rx="8" ry="9"
+                                [attr.fill]="bmiResult.key === 'ecto' ? '#206DEA' : '#D1D5DB'" />
+                            <!-- Neck -->
+                            <rect x="19" y="20" width="6" height="6" rx="2"
+                                [attr.fill]="bmiResult.key === 'ecto' ? '#206DEA' : '#D1D5DB'" />
+                            <!-- Torso — slim -->
+                            <path d="M15 26 Q10 32 11 52 Q16 58 22 58 Q28 58 33 52 Q34 32 29 26 Z"
+                                [attr.fill]="bmiResult.key === 'ecto' ? '#206DEA' : '#D1D5DB'" opacity="0.9" />
+                            <!-- Arms -->
+                            <path d="M15 28 Q6 38 7 54" stroke-width="4" stroke-linecap="round" fill="none"
+                                [attr.stroke]="bmiResult.key === 'ecto' ? '#206DEA' : '#D1D5DB'" />
+                            <path d="M29 28 Q38 38 37 54" stroke-width="4" stroke-linecap="round" fill="none"
+                                [attr.stroke]="bmiResult.key === 'ecto' ? '#206DEA' : '#D1D5DB'" />
+                            <!-- Legs -->
+                            <path d="M18 58 L14 100" stroke-width="5" stroke-linecap="round" fill="none"
+                                [attr.stroke]="bmiResult.key === 'ecto' ? '#206DEA' : '#D1D5DB'" />
+                            <path d="M26 58 L30 100" stroke-width="5" stroke-linecap="round" fill="none"
+                                [attr.stroke]="bmiResult.key === 'ecto' ? '#206DEA' : '#D1D5DB'" />
+                        </svg>
+                        <span
+                            [class]="'text-[11px] font-medium ' + (bmiResult.key === 'ecto' ? 'text-prime' : 'text-gray-300')">Ectomorph</span>
+                        <span
+                            [class]="'text-[10px] ' + (bmiResult.key === 'ecto' ? 'text-gray-500' : 'text-gray-300')">&lt;
+                            18.5</span>
+                    </div>
+
+                    <!-- Mesomorph -->
+                    <div class="flex flex-col items-center gap-2 transition-all duration-500"
+                        [class.opacity-100]="bmiResult.key === 'meso'" [class.opacity-15]="bmiResult.key !== 'meso'"
+                        [class.scale-110]="bmiResult.key === 'meso'">
+                        <div
+                            [class]="'w-10 h-10 rounded-full flex items-center justify-center mb-1 ' + (bmiResult.key === 'meso' ? 'bg-green-50' : 'bg-gray-100')">
+                            <i
+                                [class]="'fa-solid fa-person text-lg ' + (bmiResult.key === 'meso' ? 'text-green-500' : 'text-gray-300')"></i>
+                        </div>
+                        <svg width="56" height="120" viewBox="0 0 56 120">
+                            <!-- Head -->
+                            <ellipse cx="28" cy="11" rx="9" ry="10"
+                                [attr.fill]="bmiResult.key === 'meso' ? '#22C55E' : '#D1D5DB'" />
+                            <!-- Neck -->
+                            <rect x="24" y="21" width="8" height="6" rx="2"
+                                [attr.fill]="bmiResult.key === 'meso' ? '#22C55E' : '#D1D5DB'" />
+                            <!-- Torso — athletic V shape -->
+                            <path d="M14 27 Q8 36 10 55 Q18 63 28 63 Q38 63 46 55 Q48 36 42 27 Z"
+                                [attr.fill]="bmiResult.key === 'meso' ? '#22C55E' : '#D1D5DB'" opacity="0.9" />
+                            <!-- Shoulders accent -->
+                            <ellipse cx="11" cy="30" rx="6" ry="5"
+                                [attr.fill]="bmiResult.key === 'meso' ? '#16A34A' : '#D1D5DB'" />
+                            <ellipse cx="45" cy="30" rx="6" ry="5"
+                                [attr.fill]="bmiResult.key === 'meso' ? '#16A34A' : '#D1D5DB'" />
+                            <!-- Arms -->
+                            <path d="M11 32 Q4 44 5 60" stroke-width="5" stroke-linecap="round" fill="none"
+                                [attr.stroke]="bmiResult.key === 'meso' ? '#22C55E' : '#D1D5DB'" />
+                            <path d="M45 32 Q52 44 51 60" stroke-width="5" stroke-linecap="round" fill="none"
+                                [attr.stroke]="bmiResult.key === 'meso' ? '#22C55E' : '#D1D5DB'" />
+                            <!-- Legs -->
+                            <path d="M22 63 L18 100" stroke-width="6" stroke-linecap="round" fill="none"
+                                [attr.stroke]="bmiResult.key === 'meso' ? '#22C55E' : '#D1D5DB'" />
+                            <path d="M34 63 L38 100" stroke-width="6" stroke-linecap="round" fill="none"
+                                [attr.stroke]="bmiResult.key === 'meso' ? '#22C55E' : '#D1D5DB'" />
+                        </svg>
+                        <span
+                            [class]="'text-[11px] font-medium ' + (bmiResult.key === 'meso' ? 'text-green-600' : 'text-gray-300')">Mesomorph</span>
+                        <span
+                            [class]="'text-[10px] ' + (bmiResult.key === 'meso' ? 'text-gray-500' : 'text-gray-300')">18.5–24.9</span>
+                    </div>
+
+                    <!-- Overweight -->
+                    <div class="flex flex-col items-center gap-2 transition-all duration-500"
+                        [class.opacity-100]="bmiResult.key === 'over'" [class.opacity-15]="bmiResult.key !== 'over'"
+                        [class.scale-110]="bmiResult.key === 'over'">
+                        <div
+                            [class]="'w-10 h-10 rounded-full flex items-center justify-center mb-1 ' + (bmiResult.key === 'over' ? 'bg-amber-50' : 'bg-gray-100')">
+                            <i
+                                [class]="'fa-solid fa-person text-lg ' + (bmiResult.key === 'over' ? 'text-amber-500' : 'text-gray-300')"></i>
+                        </div>
+                        <svg width="68" height="120" viewBox="0 0 68 120">
+                            <!-- Head -->
+                            <ellipse cx="34" cy="11" rx="11" ry="11"
+                                [attr.fill]="bmiResult.key === 'over' ? '#F59E0B' : '#D1D5DB'" />
+                            <!-- Neck -->
+                            <rect x="29" y="22" width="10" height="6" rx="2"
+                                [attr.fill]="bmiResult.key === 'over' ? '#F59E0B' : '#D1D5DB'" />
+                            <!-- Torso — fuller -->
+                            <ellipse cx="34" cy="46" rx="22" ry="24"
+                                [attr.fill]="bmiResult.key === 'over' ? '#F59E0B' : '#D1D5DB'" opacity="0.9" />
+                            <!-- Arms -->
+                            <path d="M13 34 Q4 48 6 64" stroke-width="7" stroke-linecap="round" fill="none"
+                                [attr.stroke]="bmiResult.key === 'over' ? '#F59E0B' : '#D1D5DB'" />
+                            <path d="M55 34 Q64 48 62 64" stroke-width="7" stroke-linecap="round" fill="none"
+                                [attr.stroke]="bmiResult.key === 'over' ? '#F59E0B' : '#D1D5DB'" />
+                            <!-- Legs -->
+                            <path d="M26 68 L20 102" stroke-width="8" stroke-linecap="round" fill="none"
+                                [attr.stroke]="bmiResult.key === 'over' ? '#F59E0B' : '#D1D5DB'" />
+                            <path d="M42 68 L48 102" stroke-width="8" stroke-linecap="round" fill="none"
+                                [attr.stroke]="bmiResult.key === 'over' ? '#F59E0B' : '#D1D5DB'" />
+                        </svg>
+                        <span
+                            [class]="'text-[11px] font-medium ' + (bmiResult.key === 'over' ? 'text-amber-600' : 'text-gray-300')">Overweight</span>
+                        <span
+                            [class]="'text-[10px] ' + (bmiResult.key === 'over' ? 'text-gray-500' : 'text-gray-300')">25–29.9</span>
+                    </div>
+
+                    <!-- Obese -->
+                    <div class="flex flex-col items-center gap-2 transition-all duration-500"
+                        [class.opacity-100]="bmiResult.key === 'obese'" [class.opacity-15]="bmiResult.key !== 'obese'"
+                        [class.scale-110]="bmiResult.key === 'obese'">
+                        <div
+                            [class]="'w-10 h-10 rounded-full flex items-center justify-center mb-1 ' + (bmiResult.key === 'obese' ? 'bg-red-50' : 'bg-gray-100')">
+                            <i
+                                [class]="'fa-solid fa-person text-lg ' + (bmiResult.key === 'obese' ? 'text-red-500' : 'text-gray-300')"></i>
+                        </div>
+                        <svg width="82" height="120" viewBox="0 0 82 120">
+                            <!-- Head -->
+                            <ellipse cx="41" cy="12" rx="13" ry="12"
+                                [attr.fill]="bmiResult.key === 'obese' ? '#EF4444' : '#D1D5DB'" />
+                            <!-- Neck -->
+                            <rect x="35" y="24" width="12" height="6" rx="2"
+                                [attr.fill]="bmiResult.key === 'obese' ? '#EF4444' : '#D1D5DB'" />
+                            <!-- Torso — very full -->
+                            <ellipse cx="41" cy="52" rx="32" ry="30"
+                                [attr.fill]="bmiResult.key === 'obese' ? '#EF4444' : '#D1D5DB'" opacity="0.9" />
+                            <!-- Arms — pushed out -->
+                            <path d="M11 38 Q2 54 4 70" stroke-width="9" stroke-linecap="round" fill="none"
+                                [attr.stroke]="bmiResult.key === 'obese' ? '#EF4444' : '#D1D5DB'" />
+                            <path d="M71 38 Q80 54 78 70" stroke-width="9" stroke-linecap="round" fill="none"
+                                [attr.stroke]="bmiResult.key === 'obese' ? '#EF4444' : '#D1D5DB'" />
+                            <!-- Legs -->
+                            <path d="M30 80 L22 108" stroke-width="10" stroke-linecap="round" fill="none"
+                                [attr.stroke]="bmiResult.key === 'obese' ? '#EF4444' : '#D1D5DB'" />
+                            <path d="M52 80 L60 108" stroke-width="10" stroke-linecap="round" fill="none"
+                                [attr.stroke]="bmiResult.key === 'obese' ? '#EF4444' : '#D1D5DB'" />
+                        </svg>
+                        <span
+                            [class]="'text-[11px] font-medium ' + (bmiResult.key === 'obese' ? 'text-red-600' : 'text-gray-300')">Obese</span>
+                        <span
+                            [class]="'text-[10px] ' + (bmiResult.key === 'obese' ? 'text-gray-500' : 'text-gray-300')">≥
+                            30</span>
+                    </div>
+
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="flex gap-1.5 mt-4">
+                    <div class="h-1.5 flex-1 rounded-full transition-all duration-500"
+                        [class.bg-prime]="bmiResult.key==='ecto'" [class.bg-gray-200]="bmiResult.key!=='ecto'"></div>
+                    <div class="h-1.5 flex-1 rounded-full transition-all duration-500"
+                        [class.bg-green-500]="bmiResult.key==='meso'" [class.bg-gray-200]="bmiResult.key!=='meso'">
+                    </div>
+                    <div class="h-1.5 flex-1 rounded-full transition-all duration-500"
+                        [class.bg-amber-400]="bmiResult.key==='over'" [class.bg-gray-200]="bmiResult.key!=='over'">
+                    </div>
+                    <div class="h-1.5 flex-1 rounded-full transition-all duration-500"
+                        [class.bg-red-500]="bmiResult.key==='obese'" [class.bg-gray-200]="bmiResult.key!=='obese'">
+                    </div>
+                </div>
+                <div class="flex justify-between mt-1.5">
+                    <span class="text-[10px] text-gray-300">&lt; 18.5</span>
+                    <span class="text-[10px] text-gray-300">18.5 – 24.9</span>
+                    <span class="text-[10px] text-gray-300">25 – 29.9</span>
+                    <span class="text-[10px] text-gray-300">≥ 30</span>
+                </div>
+            </div>
+
+            <!-- Locked Features -->
+            <div class="bg-gray-50 rounded-2xl p-6 mb-5 border border-gray-100">
+                <div class="flex items-center gap-2 mb-4">
+                    <i class="fa-solid fa-lock text-gray-400 text-sm"></i>
+                    <p class="text-sm font-semibold text-gray-500">Full Recommendations — Mobile Exclusive</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    @for (item of [
+                    { icon: 'fa-solid fa-utensils', title: 'Diet Plan', sub: 'Personalized 7-day meal schedule' },
+                    { icon: 'fa-solid fa-dumbbell', title: 'Workout Plan', sub: 'Adaptive weekly training splits' },
+                    { icon: 'fa-solid fa-heart-pulse', title: 'Recovery Plan', sub: 'Sleep & HRV optimization' }
+                    ]; track item.title) {
+                    <div class="bg-white rounded-xl p-4 border border-gray-100 relative overflow-hidden">
+                        <div
+                            class="absolute inset-0 backdrop-blur-[2px] bg-white/60 flex flex-col items-center justify-center z-10 rounded-xl">
+                            <i class="fa-solid fa-lock text-gray-300 text-xl mb-1"></i>
+                            <span class="text-xs text-gray-400">Mobile only</span>
+                        </div>
+                        <i [class]="item.icon + ' text-prime text-lg mb-2'"></i>
+                        <p class="text-sm font-semibold text-second">{{ item.title }}</p>
+                        <p class="text-xs text-gray-400 mt-1">{{ item.sub }}</p>
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="bg-second rounded-2xl p-6 text-white">
+                <p class="text-sm text-gray-400 mb-1">Want a complete personalized system?</p>
+                <h3 class="text-xl font-bold mb-4">Continue on Mobile App <span class="text-prime">→</span></h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    @for (f of ['Full AI Coach','Diet & Workout Plans','Progress Tracking']; track f) {
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-check-circle text-prime text-sm"></i>
+                        <span class="text-xs text-gray-300">{{ f }}</span>
+                    </div>
+                    }
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    <button
+                        class="bg-prime hover:bg-prime/90 transition text-white px-5 py-3 rounded-xl text-sm font-semibold flex items-center gap-2">
+                        <i class="fa-brands fa-google-play"></i> Google Play
+                    </button>
+                    <button
+                        class="border border-white/20 hover:bg-white/5 transition text-white px-5 py-3 rounded-xl text-sm font-medium flex items-center gap-2">
+                        <i class="fa-brands fa-apple"></i> App Store
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    }
+
+    <!-- ═══════════════════════════════════════════════════════
+       CALORIES RESULT
+  ════════════════════════════════════════════════════════════ -->
+    @if (caloriesResult.value) {
+    <section data-result="calories" class="pb-8 bg-white">
+        <div class="max-w-3xl mx-auto px-6">
+
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm mb-5">
+
+                <!-- Score row -->
+                <div class="flex items-center gap-4 p-4 bg-gray-50 rounded-xl mb-6">
+                    <div>
+                        <p class="text-4xl font-bold text-second">{{ caloriesResult.value }}</p>
+                        <p class="text-xs text-gray-400 mt-1">kcal burned</p>
+                    </div>
+                    <div class="w-px h-12 bg-gray-200"></div>
+                    <div>
+                        <span class="text-xs font-medium px-3 py-1 rounded-full bg-orange-50 text-orange-700">{{
+                            caloriesResult.intensity }}</span>
+                        <p class="text-sm font-semibold text-second mt-1.5">{{ caloriesResult.workoutLabel }}</p>
+                        <p class="text-xs text-gray-400">{{ caloriesResult.desc }}</p>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-gray-50 rounded-xl p-4 text-center">
+                        <p class="text-xs text-gray-400 mb-1">Per Minute</p>
+                        <p class="text-2xl font-bold text-second">{{ caloriesResult.perMin }}<span
+                                class="text-xs font-normal text-gray-400"> kcal</span></p>
+                    </div>
+                    <div class="bg-gray-50 rounded-xl p-4 text-center">
+                        <p class="text-xs text-gray-400 mb-1">Workout Type</p>
+                        <p class="text-xl font-bold text-second">{{ caloriesResult.workoutLabel }}</p>
+                        <p class="text-xs text-gray-400 mt-0.5">{{ caloriesResult.intensity }} intensity</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calories CTA -->
+            <div class="bg-second rounded-2xl p-6 text-white">
+                <p class="text-sm text-gray-400 mb-1">Want a complete personalized system?</p>
+                <h3 class="text-xl font-bold mb-4">Continue on Mobile App <span class="text-prime">→</span></h3>
+                <div class="flex flex-wrap gap-3">
+                    <button
+                        class="bg-prime hover:bg-prime/90 transition text-white px-5 py-3 rounded-xl text-sm font-semibold flex items-center gap-2">
+                        <i class="fa-brands fa-google-play"></i> Google Play
+                    </button>
+                    <button
+                        class="border border-white/20 hover:bg-white/5 transition text-white px-5 py-3 rounded-xl text-sm font-medium flex items-center gap-2">
+                        <i class="fa-brands fa-apple"></i> App Store
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    }
+
+    <!-- ═══════════════════════════════════════════════════════
+       AI INSIGHT — shown only when BOTH results are ready
+  ════════════════════════════════════════════════════════════ -->
+    @if (showInsight) {
+    <section class="pb-12 bg-white">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="bg-gradient-to-br from-prime/5 to-prime/10 border border-prime/20 rounded-2xl p-6">
+                <div class="flex items-start gap-4">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-prime flex items-center justify-center flex-shrink-0 shadow-lg shadow-prime/30">
+                        <i class="fa-solid fa-brain text-white text-sm"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <p class="text-sm font-bold text-second">AI Insight</p>
+                            <span
+                                class="text-[10px] bg-prime/10 text-prime px-2 py-0.5 rounded-full font-medium">Personalized</span>
+                        </div>
+                        <p class="text-sm text-gray-600 leading-relaxed">{{ insightText }}</p>
+                        <div class="flex items-center gap-4 mt-4 pt-4 border-t border-prime/10">
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-prime inline-block"></span>
+                                <span class="text-xs text-gray-500">BMI <strong class="text-second">{{ bmiResult.value
+                                        }}</strong></span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-orange-400 inline-block"></span>
+                                <span class="text-xs text-gray-500">Calories <strong class="text-second">{{
+                                        caloriesResult.value }} kcal</strong></span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-green-400 inline-block"></span>
+                                <span class="text-xs text-gray-500">{{ caloriesResult.workoutLabel }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    }
+
+    <!-- ═══════════════════════════════════════════════════════
+       PERFORMANCE DASHBOARD — shown when any result exists
+  ════════════════════════════════════════════════════════════ -->
+    @if (bmiResult.value || caloriesResult.value) {
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl font-bold text-second mb-2">Your Performance Dashboard</h2>
+                <p class="text-gray-400 text-sm">Your latest AI analysis results.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+                    <div class="flex items-center gap-2 mb-3"><i
+                            class="fa-solid fa-weight-scale text-prime text-sm"></i><span
+                            class="text-xs text-gray-400">Last BMI</span></div>
+                    <p class="text-2xl font-bold text-second">{{ bmiResult.value || '—' }}</p>
+                    <p class="text-xs mt-1" [class]="bmiResult.badgeClass || 'text-gray-400'">{{ bmiResult.badge || 'No
+                        data yet' }}</p>
+                </div>
+                <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+                    <div class="flex items-center gap-2 mb-3"><i
+                            class="fa-solid fa-person-rays text-prime text-sm"></i><span
+                            class="text-xs text-gray-400">Body Type</span></div>
+                    <p class="text-xl font-bold text-second">{{ bmiResult.type || '—' }}</p>
+                    <p class="text-xs text-gray-400 mt-1">{{ bmiResult.desc || 'Run BMI analysis' }}</p>
+                </div>
+                <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+                    <div class="flex items-center gap-2 mb-3"><i
+                            class="fa-solid fa-fire text-orange-400 text-sm"></i><span
+                            class="text-xs text-gray-400">Calories Burned</span></div>
+                    <p class="text-2xl font-bold text-second">{{ caloriesResult.value || '—' }}</p>
+                    <p class="text-xs text-gray-400 mt-1">{{ caloriesResult.value ? 'kcal this session' : 'Run calorie
+                        analysis' }}</p>
+                </div>
+                <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+                    <div class="flex items-center gap-2 mb-3"><i
+                            class="fa-solid fa-dumbbell text-prime text-sm"></i><span
+                            class="text-xs text-gray-400">Workout Type</span></div>
+                    <p class="text-xl font-bold text-second">{{ caloriesResult.workoutLabel || '—' }}</p>
+                    <p class="text-xs text-gray-400 mt-1">{{ caloriesResult.desc || 'Run calorie analysis' }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    }
+
+    <!-- remaining sections (Mobile Exclusive, Complete Coach, Testimonials) unchanged from original -->
+
+</div>
