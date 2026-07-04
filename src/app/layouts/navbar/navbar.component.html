@@ -39,15 +39,16 @@
       <!-- Auth Buttons — في الآخر -->
       <ul
         class="font-medium flex flex-col p-4 md:p-0 mt-2  rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-2 md:items-center rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary">
-        @if(!auth){
+        @if (!isAuthenticated()) {
         <li><a routerLink="/auth/login" routerLinkActive="active-btn-nav"
             class="block py-2 px-3 text-heading rounded scrolled hover:bg-neutral-tertiary md:border-0 md:hover:text-f">Login</a>
         </li>
         <li><a routerLink="/auth/register" routerLinkActive="active-btn-nav"
             class="block py-2 px-3 text-heading rounded scrolled hover:bg-neutral-tertiary md:border-0 md:hover:text-f">Register</a>
         </li>
-        }@else {
-        <li><button routerLink="/auth/login" class="block main-btn text-heading rounded hover:bg-neutral-tertiary px-2 py-2">LogOut</button>
+        } @else {
+        <li><button type="button" (click)="logout()"
+            class="block main-btn text-heading rounded hover:bg-neutral-tertiary px-2 py-2">LogOut</button>
         </li>
         }
 

@@ -4,25 +4,43 @@
 
             <h1 class="text-3xl font-semibold main-head my-3">Welcome Back</h1>
             <p class="text-gray-600">Resume Your High-performance Journey .</p>
-            <form action="" class="text-start p-6 " [formGroup]="loginForm">
+            <form class="text-start p-6" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
                 <div class="mb-3">
                     <label for="email" class="block  mb-1 text-sm font-medium text-gray-600">Email:</label>
-                    <input type="Email" id="email"
+                    <input type="email" id="email" formControlName="email"
                         class="bg-white rounded-xl focus:shadow-sm focus:shadow-prime border-prime text-heading text-sm rounded-base focus:border-none  block w-full px-3 py-2.5 shadow-xs placeholder:text-gray-500"
-                        placeholder="amirfaizy11@gmail.com" required />
+                        placeholder="amirfaizy11@gmail.com" />
+                    @if (loginForm.get('email')?.touched && loginForm.get('email')?.hasError('required')) {
+                    <p class="text-red-500 text-sm mt-1">Email is required.</p>
+                    }
+                    @if (loginForm.get('email')?.touched && loginForm.get('email')?.hasError('email')) {
+                    <p class="text-red-500 text-sm mt-1">Please enter a valid email.</p>
+                    }
                 </div>
                 <div class="">
                     <div class="flex justify-between mb-1">
                         <label for="password" class="block  text-sm font-medium text-gray-600">Password :</label>
                         <a routerLink="/auth/forgot-password" class="text-end text-prime font-semibold">Forget Password?</a>
                     </div>
-                    <input type="password" id="password"
+                    <input type="password" id="password" formControlName="password"
                         class="bg-white rounded-xl focus:shadow-sm focus:shadow-prime border-prime text-heading text-sm rounded-base focus:border-none  block w-full px-3 py-2.5 shadow-xs placeholder:text-gray-500"
-                        placeholder="amirF#2100" required />
+                        placeholder="amirF#2100" />
+                    @if (loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')) {
+                    <p class="text-red-500 text-sm mt-1">Password is required.</p>
+                    }
+                    @if (loginForm.get('password')?.touched && loginForm.get('password')?.hasError('pattern')) {
+                    <p class="text-red-500 text-sm mt-1">Use at least 8 chars with upper, lower, and a number.</p>
+                    }
                 </div>
 
+                @if (errorMessage) {
+                <p class="text-red-500 text-sm mt-4">{{ errorMessage }}</p>
+                }
 
-                <button (click)="submitLogin()" class="w-full text-white text-xl px-2 py-3 rounded-xl bg-prime mt-5">login</button>
+                <button type="submit" [disabled]="isSubmitting"
+                    class="w-full text-white text-xl px-2 py-3 rounded-xl bg-prime mt-5 disabled:opacity-60">
+                    {{ isSubmitting ? 'Signing in...' : 'login' }}
+                </button>
                 <app-repassword [loginPage]="true"></app-repassword>
             </form>
         </div>

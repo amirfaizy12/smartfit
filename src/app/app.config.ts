@@ -3,9 +3,10 @@ import { provideRouter, withHashLocation, withViewTransitions } from '@angular/r
 
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes ), provideClientHydration(withEventReplay()), provideHttpClient(withFetch()), provideAnimations()]
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes ), provideClientHydration(withEventReplay()), provideHttpClient(withFetch(), withInterceptors([authInterceptor])), provideAnimations()]
 };

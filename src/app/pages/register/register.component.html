@@ -129,10 +129,18 @@
                     <p *ngIf="f['terms'].touched && f['terms'].hasError('requiredTrue')"
                         class="text-red-500 text-xs -mt-3">You must agree to the terms.</p>
 
+                    @if (errorMessage) {
+                    <p class="text-red-500 text-sm">{{ errorMessage }}</p>
+                    }
+
+                    @if (successMessage) {
+                    <p class="text-green-600 text-sm">{{ successMessage }}</p>
+                    }
+
                     <!-- Submit -->
-                    <button type="submit"
-                        class="w-full main-btn">
-                        Create Account
+                    <button type="submit" [disabled]="isSubmitting"
+                        class="w-full main-btn disabled:opacity-60">
+                        {{ isSubmitting ? 'Creating account...' : 'Create Account' }}
                         
                     </button>
 

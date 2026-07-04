@@ -61,9 +61,14 @@
                     </li>
                 </ul>
 
-                <button type="submit" class="w-full text-white capitalize text-xl px-2 py-3 rounded-xl bg-prime my-6">
-                    Update Password
+                <button type="submit" [disabled]="isSubmitting"
+                    class="w-full text-white capitalize text-xl px-2 py-3 rounded-xl bg-prime my-6 disabled:opacity-60">
+                    {{ isSubmitting ? 'Updating password...' : 'Update Password' }}
                 </button>
+
+                @if (errorMessage) {
+                <p class="text-red-500 text-sm">{{ errorMessage }}</p>
+                }
 
             </form>
         </div>

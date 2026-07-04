@@ -1,5 +1,5 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import {
   AbstractControl,
@@ -8,9 +8,19 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { finalize } from 'rxjs';
+import { RouterLink } from '@angular/router';
+import { finalize, switchMap } from 'rxjs';
+import { AuthService } from '../../core/services/auth/auth.service';
+import { BmiService } from '../../core/services/ai/bmi.service';
+import { CaloriesService } from '../../core/services/ai/calories.service';
+import { ProfileService } from '../../core/services/profile/profile.service';
+import {
+  CreateProfileRequest,
+  Gender,
+  WorkoutType,
+} from '../../core/models/api.models';
+import { getApiErrorMessage } from '../../core/utils/api-error.util';
 
-// ── Types ────────────────────────────────────────────────────
 interface BmiResult {
   key: 'ecto' | 'meso' | 'over' | 'obese' | '';
   value: string;
@@ -28,35 +38,49 @@ interface CaloriesResult {
   perMin: string;
 }
 
-// ── Validators ───────────────────────────────────────────────
 function positiveNumber(control: AbstractControl) {
-  const v = parseFloat(control.value);
-  return isNaN(v) || v <= 0 ? { positiveNumber: true } : null;
+  const value = parseFloat(control.value);
+  return Number.isNaN(value) || value <= 0 ? { positiveNumber: true } : null;
 }
 
 @Component({
   selector: 'app-ai',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './ai.component.html',
   styleUrl: './ai.component.scss',
 })
 export class AiComponent {
-  private fb = inject(FormBuilder);
-  private http = inject(HttpClient);
+  private readonly fb = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
+  private readonly profileService = inject(ProfileService);
+  private readonly bmiService = inject(BmiService);
+  private readonly caloriesService = inject(CaloriesService);
 
-  // ── Active Tab ───────────────────────────────────────────
+  readonly isAuthenticated = this.authService.isAuthenticated;
+
   activeTab: 'bmi' | 'calories' = 'bmi';
-
-  // ── Loading ──────────────────────────────────────────────
   isLoadingBmi = false;
   isLoadingCal = false;
 
-  // ── Results ──────────────────────────────────────────────
-  bmiResult: BmiResult = { key: '', value: '', badge: '', badgeClass: '', type: '', desc: '' };
-  caloriesResult: CaloriesResult = { value: '', intensity: '', workoutLabel: '', desc: '', perMin: '' };
+  bmiResult: BmiResult = {
+    key: '',
+    value: '',
+    badge: '',
+    badgeClass: '',
+    type: '',
+    desc: '',
+  };
+
+  caloriesResult: CaloriesResult = {
+    value: '',
+    intensity: '',
+    workoutLabel: '',
+    desc: '',
+    perMin: '',
+  };
+
   apiError = '';
 
-  // ── BMI Form ─────────────────────────────────────────────
   bmiForm: FormGroup = this.fb.group({
     Sex: ['', Validators.required],
     Age: ['', [Validators.required, Validators.min(1), Validators.max(120), positiveNumber]],
@@ -64,31 +88,42 @@ export class AiComponent {
     Weight_kg: ['', [Validators.required, Validators.min(10), Validators.max(500), positiveNumber]],
   });
 
-  // ── Calories Form ────────────────────────────────────────
   calForm: FormGroup = this.fb.group({
-    Gender: ['', Validators.required],
-    Age: ['', [Validators.required, Validators.min(1), Validators.max(120), positiveNumber]],
-    Weight_kg: ['', [Validators.required, Validators.min(10), Validators.max(500), positiveNumber]],
     Workout_Type: ['', Validators.required],
-    Session_Duration_hours: ['', [Validators.required, Validators.min(0.1), Validators.max(24), positiveNumber]],
-    Avg_BPM: ['', [Validators.required, Validators.min(40), Validators.max(220), positiveNumber]],
-    Max_BPM: ['', [Validators.required, Validators.min(40), Validators.max(220), positiveNumber]],
+    Session_Duration_hours: [
+      '',
+      [Validators.required, Validators.min(0.1), Validators.max(24), positiveNumber],
+    ],
     Workout_Frequency_days_week: ['', [Validators.required, Validators.min(1), Validators.max(7)]],
   });
 
-  // ── Helpers ──────────────────────────────────────────────
   isInvalid(form: FormGroup, field: string): boolean {
-    const c = form.get(field);
-    return !!(c && c.invalid && (c.dirty || c.touched));
+    const control = form.get(field);
+    return !!(control && control.invalid && (control.dirty || control.touched));
   }
 
   getError(form: FormGroup, field: string): string {
-    const c = form.get(field);
-    if (!c || !c.errors) return '';
-    if (c.errors['required']) return 'This field is required.';
-    if (c.errors['min']) return `Minimum value is ${c.errors['min'].min}.`;
-    if (c.errors['max']) return `Maximum value is ${c.errors['max'].max}.`;
-    if (c.errors['positiveNumber']) return 'Must be a positive number.';
+    const control = form.get(field);
+    if (!control?.errors) {
+      return '';
+    }
+
+    if (control.errors['required']) {
+      return 'This field is required.';
+    }
+
+    if (control.errors['min']) {
+      return `Minimum value is ${control.errors['min'].min}.`;
+    }
+
+    if (control.errors['max']) {
+      return `Maximum value is ${control.errors['max'].max}.`;
+    }
+
+    if (control.errors['positiveNumber']) {
+      return 'Must be a positive number.';
+    }
+
     return 'Invalid value.';
   }
 
@@ -96,113 +131,192 @@ export class AiComponent {
     document.getElementById('ai-analyzer')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  // ── BMI Analysis ─────────────────────────────────────────
   analyzeBmi(): void {
+    if (!this.isAuthenticated()) {
+      this.apiError = 'Please log in to run BMI analysis.';
+      return;
+    }
+
     if (this.bmiForm.invalid) {
       this.bmiForm.markAllAsTouched();
       return;
     }
+
     this.isLoadingBmi = true;
     this.apiError = '';
 
     const { Sex, Age, Height_cm, Weight_kg } = this.bmiForm.value;
+    const profilePayload: CreateProfileRequest = {
+      fullName: 'SmartFit User',
+      age: +Age,
+      height: +Height_cm,
+      weight: +Weight_kg,
+      gender: Sex as Gender,
+      hasHypertension: false,
+      hasDiabetes: false,
+      fitnessGoal: 'ImproveFitness',
+      fitnessType: 'Beginner',
+      lifestyleActivity: 'ModeratelyActive',
+    };
 
-    this.http
-      .post<{ predicted_bmi: number }>(
-        'https://web-production-9a7c5.up.railway.app/predict',
-        { Sex, Age: +Age, Height_cm: +Height_cm, Weight_kg: +Weight_kg }
+    this.profileService
+      .upsertProfile(profilePayload)
+      .pipe(
+        switchMap(() => this.bmiService.predict()),
+        finalize(() => (this.isLoadingBmi = false))
       )
-      .pipe(finalize(() => (this.isLoadingBmi = false)))
       .subscribe({
-        next: (res) => {
-          this.setBmiResult(res.predicted_bmi);
+        next: (result) => {
+          this.setBmiResult(result.bmi, result.bodyType, result.healthStatus);
           setTimeout(() => {
-            document.querySelector('[data-result="bmi"]')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document
+              .querySelector('[data-result="bmi"]')
+              ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }, 100);
         },
-        error: () => {
-          this.apiError = 'BMI API is currently unavailable. Please try again later.';
+        error: (error: HttpErrorResponse) => {
+          this.apiError = getApiErrorMessage(
+            error,
+            'BMI analysis failed. Please complete your profile and try again.'
+          );
         },
       });
   }
 
-  private setBmiResult(bmi: number): void {
-    const val = bmi.toFixed(1);
-    if (bmi < 18.5) {
-      this.bmiResult = { key: 'ecto', value: val, badge: 'Underweight', badgeClass: 'bg-blue-50 text-blue-700', type: 'Ectomorph', desc: 'Lean frame, fast metabolism' };
-    } else if (bmi < 25) {
-      this.bmiResult = { key: 'meso', value: val, badge: 'Balanced', badgeClass: 'bg-green-50 text-green-700', type: 'Mesomorph', desc: 'Athletic, well-proportioned' };
-    } else if (bmi < 30) {
-      this.bmiResult = { key: 'over', value: val, badge: 'Overweight', badgeClass: 'bg-amber-50 text-amber-700', type: 'Endomorph', desc: 'Higher body fat tendency' };
-    } else {
-      this.bmiResult = { key: 'obese', value: val, badge: 'Obese', badgeClass: 'bg-red-50 text-red-700', type: 'Obese', desc: 'High health risk range' };
-    }
-  }
-
-  // ── Calories Analysis ────────────────────────────────────
   analyzeCalories(): void {
+    if (!this.isAuthenticated()) {
+      this.apiError = 'Please log in to predict calories.';
+      return;
+    }
+
     if (this.calForm.invalid) {
       this.calForm.markAllAsTouched();
       return;
     }
+
     if (!this.bmiResult.value) {
       this.apiError = 'Please run BMI Analysis first — it is required for calorie prediction.';
       return;
     }
+
     this.isLoadingCal = true;
     this.apiError = '';
 
-    const v = this.calForm.value;
+    const formValue = this.calForm.value;
     const payload = {
-      Age: +v.Age,
-      Gender: v.Gender,
-      Weight_kg: +v.Weight_kg,
-      Workout_Type: v.Workout_Type,
-      Session_Duration_hours: +v.Session_Duration_hours,
-      Avg_BPM: +v.Avg_BPM,
-      Max_BPM: +v.Max_BPM,
-      Workout_Frequency_days_week: +v.Workout_Frequency_days_week,
-      BMI: parseFloat(this.bmiResult.value),
+      workoutType: formValue.Workout_Type as WorkoutType,
+      sessionDurationHours: +formValue.Session_Duration_hours,
+      workoutFrequencyDaysWeek: +formValue.Workout_Frequency_days_week,
     };
 
-    this.http
-      .post<{ predicted_burned_calories: number }>(
-        'https://web-production-765ba.up.railway.app/predict',
-        payload
-      )
+    this.caloriesService
+      .predict(payload)
       .pipe(finalize(() => (this.isLoadingCal = false)))
       .subscribe({
-        next: (res) => {
-          this.setCaloriesResult(res.predicted_burned_calories, v);
+        next: (result) => {
+          this.setCaloriesResult(result.calories, payload);
           setTimeout(() => {
-            document.querySelector('[data-result="calories"]')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document
+              .querySelector('[data-result="calories"]')
+              ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }, 100);
         },
-        error: () => {
-          this.apiError = 'Calories API is currently unavailable. Please try again later.';
+        error: (error: HttpErrorResponse) => {
+          this.apiError = getApiErrorMessage(
+            error,
+            'Calories prediction failed. Please try again.'
+          );
         },
       });
   }
 
+  private setBmiResult(bmi: number, bodyType?: string, healthStatus?: string): void {
+    const value = bmi.toFixed(1);
+
+    if (bodyType) {
+      this.bmiResult = {
+        key: 'meso',
+        value,
+        badge: healthStatus ?? 'Analyzed',
+        badgeClass: 'bg-green-50 text-green-700',
+        type: bodyType,
+        desc: healthStatus ?? 'AI body type classification',
+      };
+      return;
+    }
+
+    if (bmi < 18.5) {
+      this.bmiResult = {
+        key: 'ecto',
+        value,
+        badge: 'Underweight',
+        badgeClass: 'bg-blue-50 text-blue-700',
+        type: 'Ectomorph',
+        desc: 'Lean frame, fast metabolism',
+      };
+    } else if (bmi < 25) {
+      this.bmiResult = {
+        key: 'meso',
+        value,
+        badge: 'Balanced',
+        badgeClass: 'bg-green-50 text-green-700',
+        type: 'Mesomorph',
+        desc: 'Athletic, well-proportioned',
+      };
+    } else if (bmi < 30) {
+      this.bmiResult = {
+        key: 'over',
+        value,
+        badge: 'Overweight',
+        badgeClass: 'bg-amber-50 text-amber-700',
+        type: 'Endomorph',
+        desc: 'Higher body fat tendency',
+      };
+    } else {
+      this.bmiResult = {
+        key: 'obese',
+        value,
+        badge: 'Obese',
+        badgeClass: 'bg-red-50 text-red-700',
+        type: 'Obese',
+        desc: 'High health risk range',
+      };
+    }
+  }
+
   private readonly workoutMeta: Record<string, { label: string; intensity: string; desc: string }> = {
-    Cardio:   { label: 'Cardio',    intensity: 'High',      desc: 'Aerobic endurance session' },
-    HIIT:     { label: 'HIIT',      intensity: 'Very High', desc: 'High-intensity interval rounds' },
-    Strength: { label: 'Strength',  intensity: 'Moderate',  desc: 'Resistance & hypertrophy focus' },
+    Cardio: { label: 'Cardio', intensity: 'High', desc: 'Aerobic endurance session' },
+    HIIT: { label: 'HIIT', intensity: 'Very High', desc: 'High-intensity interval rounds' },
+    Strength: { label: 'Strength', intensity: 'Moderate', desc: 'Resistance and hypertrophy focus' },
+    Yoga: { label: 'Yoga', intensity: 'Low', desc: 'Mobility and recovery focused session' },
+    Walking: { label: 'Walking', intensity: 'Low', desc: 'Steady-state cardio session' },
   };
 
-  private setCaloriesResult(cal: number, v: any): void {
-    const meta = this.workoutMeta[v.Workout_Type] ?? { label: v.Workout_Type, intensity: 'Moderate', desc: 'Workout session' };
-    const durationMins = +v.Session_Duration_hours * 60;
+  private setCaloriesResult(
+    calories: number,
+    payload: {
+      workoutType: WorkoutType;
+      sessionDurationHours: number;
+      workoutFrequencyDaysWeek: number;
+    }
+  ): void {
+    const meta = this.workoutMeta[payload.workoutType] ?? {
+      label: payload.workoutType,
+      intensity: 'Moderate',
+      desc: 'Workout session',
+    };
+
+    const durationMins = payload.sessionDurationHours * 60;
+
     this.caloriesResult = {
-      value: cal.toFixed(0),
+      value: calories.toFixed(0),
       intensity: meta.intensity,
       workoutLabel: meta.label,
       desc: meta.desc,
-      perMin: durationMins > 0 ? (cal / durationMins).toFixed(1) : '—',
+      perMin: durationMins > 0 ? (calories / durationMins).toFixed(1) : '—',
     };
   }
 
-  // ── Insight: shown only when both results are ready ──────
   get showInsight(): boolean {
     return !!this.bmiResult.value && !!this.caloriesResult.value;
   }
@@ -215,12 +329,16 @@ export class AiComponent {
 
     if (bmi < 18.5) {
       return `As an ${type}, your lean frame burns calories efficiently. You burned ${cal} kcal — consider pairing ${workout} with a caloric surplus and progressive strength training to build lean mass.`;
-    } else if (bmi < 25) {
-      return `Your ${type} profile is well-balanced. You burned ${cal} kcal in this ${workout} session — an ideal range for maintaining composition. Consistency is your highest leverage.`;
-    } else if (bmi < 30) {
-      return `With ${cal} kcal burned in your ${workout} session, you're making solid progress. Your ${type} tendencies mean diet adherence will be your biggest multiplier alongside regular sessions.`;
-    } else {
-      return `Every session counts — you burned ${cal} kcal today. Combining ${workout} with a structured nutrition plan will drive the most impact for your current composition goals.`;
     }
+
+    if (bmi < 25) {
+      return `Your ${type} profile is well-balanced. You burned ${cal} kcal in this ${workout} session — an ideal range for maintaining composition. Consistency is your highest leverage.`;
+    }
+
+    if (bmi < 30) {
+      return `With ${cal} kcal burned in your ${workout} session, you're making solid progress. Your ${type} tendencies mean diet adherence will be your biggest multiplier alongside regular sessions.`;
+    }
+
+    return `Every session counts — you burned ${cal} kcal today. Combining ${workout} with a structured nutrition plan will drive the most impact for your current composition goals.`;
   }
 }

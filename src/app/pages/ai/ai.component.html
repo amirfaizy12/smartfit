@@ -255,6 +255,14 @@
             </div>
             }
 
+            @if (!isAuthenticated()) {
+            <div
+                class="mb-6 flex items-center justify-between gap-3 bg-blue-50 border border-blue-100 text-blue-700 text-sm rounded-xl px-4 py-3">
+                <span><i class="fa-solid fa-lock mr-2"></i>Log in to save your profile and run AI analysis.</span>
+                <a routerLink="/auth/login" class="text-prime font-semibold whitespace-nowrap">Login</a>
+            </div>
+            }
+
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
 
                 <!-- Tabs -->
@@ -343,7 +351,8 @@
                         }
                     </button>
                     <p class="text-center text-xs text-gray-300 mt-3">
-                        <i class="fa-solid fa-shield-halved mr-1"></i>Data is processed securely and never stored.
+                        <i class="fa-solid fa-shield-halved mr-1"></i>Your data is synced securely with your SmartFit
+                        profile.
                     </p>
                 </form>
                 }
@@ -364,44 +373,6 @@
                 <form [formGroup]="calForm" (ngSubmit)="analyzeCalories()" novalidate>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
 
-                        <!-- Gender -->
-                        <div>
-                            <label class="block text-xs font-medium text-gray-500 mb-2">Gender</label>
-                            <select formControlName="Gender"
-                                [class]="'w-full border rounded-xl px-4 py-3 text-sm text-second focus:outline-none focus:border-prime ' + (isInvalid(calForm,'Gender') ? 'border-red-300 bg-red-50' : 'border-gray-200')">
-                                <option value="">Select gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
-                            @if (isInvalid(calForm,'Gender')) {
-                            <p class="text-red-500 text-[11px] mt-1"><i
-                                    class="fa-solid fa-circle-exclamation mr-1"></i>{{ getError(calForm,'Gender') }}</p>
-                            }
-                        </div>
-
-                        <!-- Age -->
-                        <div>
-                            <label class="block text-xs font-medium text-gray-500 mb-2">Age</label>
-                            <input type="number" formControlName="Age" placeholder="e.g. 25"
-                                [class]="'w-full border rounded-xl px-4 py-3 text-sm text-second focus:outline-none focus:border-prime ' + (isInvalid(calForm,'Age') ? 'border-red-300 bg-red-50' : 'border-gray-200')" />
-                            @if (isInvalid(calForm,'Age')) {
-                            <p class="text-red-500 text-[11px] mt-1"><i
-                                    class="fa-solid fa-circle-exclamation mr-1"></i>{{ getError(calForm,'Age') }}</p>
-                            }
-                        </div>
-
-                        <!-- Weight -->
-                        <div>
-                            <label class="block text-xs font-medium text-gray-500 mb-2">Weight (kg)</label>
-                            <input type="number" formControlName="Weight_kg" placeholder="e.g. 70"
-                                [class]="'w-full border rounded-xl px-4 py-3 text-sm text-second focus:outline-none focus:border-prime ' + (isInvalid(calForm,'Weight_kg') ? 'border-red-300 bg-red-50' : 'border-gray-200')" />
-                            @if (isInvalid(calForm,'Weight_kg')) {
-                            <p class="text-red-500 text-[11px] mt-1"><i
-                                    class="fa-solid fa-circle-exclamation mr-1"></i>{{ getError(calForm,'Weight_kg') }}
-                            </p>
-                            }
-                        </div>
-
                         <!-- Workout Type -->
                         <div>
                             <label class="block text-xs font-medium text-gray-500 mb-2">Workout Type</label>
@@ -411,6 +382,8 @@
                                 <option value="Cardio">Cardio</option>
                                 <option value="HIIT">HIIT</option>
                                 <option value="Strength">Strength</option>
+                                <option value="Yoga">Yoga</option>
+                                <option value="Walking">Walking</option>
                             </select>
                             @if (isInvalid(calForm,'Workout_Type')) {
                             <p class="text-red-500 text-[11px] mt-1"><i
@@ -432,36 +405,8 @@
                             }
                         </div>
 
-                        <!-- Avg BPM -->
-                        <div>
-                            <label class="block text-xs font-medium text-gray-500 mb-2">
-                                Avg BPM <span class="text-gray-300">(resting heart rate)</span>
-                            </label>
-                            <input type="number" formControlName="Avg_BPM" placeholder="e.g. 80"
-                                [class]="'w-full border rounded-xl px-4 py-3 text-sm text-second focus:outline-none focus:border-prime ' + (isInvalid(calForm,'Avg_BPM') ? 'border-red-300 bg-red-50' : 'border-gray-200')" />
-                            @if (isInvalid(calForm,'Avg_BPM')) {
-                            <p class="text-red-500 text-[11px] mt-1"><i
-                                    class="fa-solid fa-circle-exclamation mr-1"></i>{{ getError(calForm,'Avg_BPM') }}
-                            </p>
-                            }
-                        </div>
-
-                        <!-- Max BPM -->
-                        <div>
-                            <label class="block text-xs font-medium text-gray-500 mb-2">
-                                Max BPM <span class="text-gray-300">(peak during workout)</span>
-                            </label>
-                            <input type="number" formControlName="Max_BPM" placeholder="e.g. 150"
-                                [class]="'w-full border rounded-xl px-4 py-3 text-sm text-second focus:outline-none focus:border-prime ' + (isInvalid(calForm,'Max_BPM') ? 'border-red-300 bg-red-50' : 'border-gray-200')" />
-                            @if (isInvalid(calForm,'Max_BPM')) {
-                            <p class="text-red-500 text-[11px] mt-1"><i
-                                    class="fa-solid fa-circle-exclamation mr-1"></i>{{ getError(calForm,'Max_BPM') }}
-                            </p>
-                            }
-                        </div>
-
                         <!-- Workout Frequency -->
-                        <div>
+                        <div class="md:col-span-2">
                             <label class="block text-xs font-medium text-gray-500 mb-2">Workout Frequency
                                 (days/week)</label>
                             <select formControlName="Workout_Frequency_days_week"
@@ -508,7 +453,8 @@
                         }
                     </button>
                     <p class="text-center text-xs text-gray-300 mt-3">
-                        <i class="fa-solid fa-shield-halved mr-1"></i>Data is processed securely and never stored.
+                        <i class="fa-solid fa-shield-halved mr-1"></i>Your data is synced securely with your SmartFit
+                        profile.
                     </p>
                 </form>
                 }
