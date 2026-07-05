@@ -14,12 +14,11 @@ export class HomeComponent {
   pLATFORM_ID = inject(PLATFORM_ID)
   @HostListener('window:scroll')
   onScroll(): void {
-    this.scroolService.setScrolled(window.scrollY > (window.innerHeight - 200));
+    this.scroolService.setScrolled(window.scrollY > 50);
   }
   ngOnInit(): void {
     if(isPlatformBrowser(this.pLATFORM_ID)){
-
-      this.scroolService.setScrolled(window.scrollY > (window.innerHeight - 200));
+      this.scroolService.setScrolled(window.scrollY > 50);
     }
       
   }

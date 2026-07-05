@@ -4,9 +4,10 @@
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
     <a routerLink="" class="flex items-center space-x-3 rtl:space-x-reverse">
       <img src="/logo.png" class="h-10 rounded-full" alt="Flowbite Logo" />
-      <span class="self-center text-2xl uppercase text-heading font-bold whitespace-nowrap">Smart<span class="text-prime">Fit</span></span>
+      <span class="self-center text-2xl uppercase text-heading font-bold whitespace-nowrap">Smart<span
+          class="text-prime">Fit</span></span>
     </a>
-    <button data-collapse-toggle="navbar-default" type="button"
+    <button (click)="toggleMenu()" type="button"
       class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary"
       aria-controls="navbar-default" aria-expanded="false">
       <span class="sr-only">Open main menu</span>
@@ -15,7 +16,8 @@
         <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14" />
       </svg>
     </button>
-    <div class="hidden w-full md:flex md:flex-1 md:items-center md:justify-between md:w-auto" id="navbar-default">
+    <div [class]="isMenuOpen ? 'flex' : 'hidden'"
+      class=" w-full md:flex md:flex-1 md:items-center md:justify-between md:w-auto" id="navbar-default">
 
       <!-- Nav Links — في النص -->
       <ul
@@ -24,16 +26,20 @@
             class="block py-2 px-3 bg-brand rounded md:text-f" aria-current="page">Home</a></li>
         @if (isAuthenticated()) {
         <li><a routerLink="/ai" routerLinkActive="active-btn-nav"
-            class="block py-2 px-3 text-heading rounded scrolled hover:bg-neutral-tertiary md:border-0 md:hover:text-f">AI</a>
+            class="block py-2 px-3 text-heading rounded scrolled hover:bg-neutral-tertiary md:border-0 md:hover:text-f"
+            (click)="closeMenu()">AI</a>
         </li>
         <li><a routerLink="/dashboard" routerLinkActive="active-btn-nav"
-            class="block py-2 px-3 text-heading rounded scrolled hover:bg-neutral-tertiary md:border-0 md:hover:text-f">Dashboard</a>
+            class="block py-2 px-3 text-heading rounded scrolled hover:bg-neutral-tertiary md:border-0 md:hover:text-f"
+            (click)="closeMenu()">Dashboard</a>
         </li>
         <li><a routerLink="/contact" routerLinkActive="active-btn-nav"
-            class="block py-2 px-3 text-heading rounded scrolled hover:bg-neutral-tertiary md:border-0 md:hover:text-f">Contact</a>
+            class="block py-2 px-3 text-heading rounded scrolled hover:bg-neutral-tertiary md:border-0 md:hover:text-f"
+            (click)="closeMenu()">Contact</a>
         </li>
         <li><a routerLink="/profile" routerLinkActive="active-btn-nav"
-            class="block py-2 px-3 text-heading rounded scrolled hover:bg-neutral-tertiary md:border-0 md:hover:text-f">Profile</a>
+            class="block py-2 px-3 text-heading rounded scrolled hover:bg-neutral-tertiary md:border-0 md:hover:text-f"
+            (click)="closeMenu()">Profile</a>
         </li>
         }
       </ul>
