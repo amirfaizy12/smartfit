@@ -22,6 +22,7 @@
         class="font-medium flex flex-col p-4 md:p-0 mt-4  md:items-center rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-2 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary md:mx-auto">
         <li><a routerLink="/home" routerLinkActive="active-btn-nav" [class]="isScrolled ? 'scrolled' : 'notscrolled'"
             class="block py-2 px-3 bg-brand rounded md:text-f" aria-current="page">Home</a></li>
+        @if (isAuthenticated()) {
         <li><a routerLink="/ai" routerLinkActive="active-btn-nav"
             class="block py-2 px-3 text-heading rounded scrolled hover:bg-neutral-tertiary md:border-0 md:hover:text-f">AI</a>
         </li>
@@ -34,6 +35,7 @@
         <li><a routerLink="/profile" routerLinkActive="active-btn-nav"
             class="block py-2 px-3 text-heading rounded scrolled hover:bg-neutral-tertiary md:border-0 md:hover:text-f">Profile</a>
         </li>
+        }
       </ul>
 
       <!-- Auth Buttons — في الآخر -->

@@ -2,47 +2,46 @@
 
     <!-- Navbar -->
     <nav class="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between">
-        <span class="text-blue-600 font-bold text-xl tracking-tight">AuraFit</span>
+        <span class="text-blue-600 font-bold text-xl tracking-tight">SmartFit</span>
         <div class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
-            <a href="#" class="hover:text-blue-600 transition-colors">Dashboard</a>
-            <a href="#" class="hover:text-blue-600 transition-colors">Workouts</a>
-            <a href="#" class="hover:text-blue-600 transition-colors">Nutrition</a>
-            <a href="#" class="hover:text-blue-600 transition-colors">Insights</a>
-            <a href="#" class="hover:text-blue-600 transition-colors">Community</a>
+            <a routerLink="/home"      class="hover:text-blue-600 transition-colors">Home</a>
+            <a routerLink="/ai"        class="hover:text-blue-600 transition-colors">AI</a>
+            <a routerLink="/dashboard" class="hover:text-blue-600 transition-colors">Dashboard</a>
+            <a routerLink="/contact"   class="hover:text-blue-600 transition-colors">Contact</a>
         </div>
         <div class="flex items-center gap-3">
-            <button class="text-gray-500 hover:text-gray-700">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-            <button
-                class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
-                Go Premium
-            </button>
             <!-- Profile Avatar in Navbar -->
             <div class="relative cursor-pointer" (click)="toggleDropdown()">
-                <img [src]="user.avatar" alt="avatar"
+                <img [src]="avatarUrl()" alt="avatar"
                     class="w-9 h-9 rounded-full object-cover border-2 border-blue-500" />
                 <!-- Dropdown -->
                 @if (showDropdown) {
-                <div
-                    class="absolute right-0 top-12 bg-white border border-gray-100 rounded-xl shadow-lg w-44 z-50 py-2">
+                <div class="absolute right-0 top-12 bg-white border border-gray-100 rounded-xl shadow-lg w-44 z-50 py-2">
                     <a routerLink="/profile"
                         class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
                         <i class="fa-solid fa-user text-gray-400 w-4"></i> View Profile
                     </a>
-                    <a routerLink="/profile/edit-profile"
+                    <a routerLink="/edite-Profile"
                         class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
                         <i class="fa-solid fa-pen text-gray-400 w-4"></i> Edit Profile
                     </a>
                     <hr class="my-1 border-gray-100" />
-                    <button class="flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-gray-50 w-full">
-                        <i class="fa-solid fa-right-from-bracket w-4"></i> Logout
-                    </button>
                 </div>
                 }
             </div>
         </div>
     </nav>
+
+    <!-- ── AI Banner ─────────────────────────────────────────────────────── -->
+    @if (fromAi) {
+    <div class="bg-indigo-600 text-white px-6 py-3 flex items-center gap-3 text-sm">
+        <i class="fa-solid fa-circle-exclamation text-indigo-200"></i>
+        <span>
+            The AI couldn't analyse your BMI because your fitness profile is incomplete.
+            Fill in the <strong>Fitness Profile</strong> section below and save — then we'll take you right back.
+        </span>
+    </div>
+    }
 
     <!-- Back + Title -->
     <div class="max-w-6xl mx-auto px-4 pt-6 pb-2">
@@ -51,7 +50,7 @@
         </a>
         <h1 class="text-3xl font-bold text-gray-900">Edit Profile</h1>
         <p class="text-gray-500 text-sm mt-1">Update your personal information, physical metrics, and performance goals
-            to keep your AuraFit insights accurate.</p>
+            to keep your SmartFit insights accurate.</p>
     </div>
 
     <!-- Body -->
@@ -63,18 +62,25 @@
             <!-- Photo Card -->
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-center">
                 <div class="relative w-28 h-28 mx-auto mb-4">
-                    <img [src]="user.avatar" alt="avatar"
+                    <img [src]="avatarUrl()" alt="avatar"
                         class="w-full h-full rounded-full object-cover border-4 border-white shadow-md" />
                 </div>
-                <h2 class="font-bold text-gray-900 text-lg">{{ user.name }}</h2>
-                <p class="text-gray-400 text-xs mt-1">Member since {{ user.memberSince }}</p>
+                <h2 class="font-bold text-gray-900 text-lg">{{ displayName() }}</h2>
+                <p class="text-gray-400 text-xs mt-1">SmartFit Member</p>
 
                 <input #photoInput type="file" accept="image/*" class="hidden" (change)="onPhotoSelected($event)" />
                 <button (click)="photoInput.click()"
                     class="mt-4 w-full border border-blue-500 text-blue-500 hover:bg-blue-50 text-sm font-medium py-2 rounded-xl transition-colors">
-                    Change Photo
+                    Upload Photo
                 </button>
-                <p class="text-gray-400 text-xs mt-2">JPG, PNG OR GIF. MAX 5MB.</p>
+                
+                <div class="mt-3 text-left">
+                    <label class="block text-xs font-medium text-gray-500 mb-1">Or Paste Image URL</label>
+                    <input [(ngModel)]="user.avatar" type="text" placeholder="https://..."
+                        class="w-full border border-gray-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                </div>
+                
+                <p class="text-gray-400 text-xs mt-3">JPG, PNG OR GIF. MAX 5MB.</p>
             </div>
 
             <!-- Account Security -->
@@ -116,7 +122,40 @@
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-gray-500 mb-1">Email Address</label>
-                        <input [(ngModel)]="user.email" type="email"
+                        <input [(ngModel)]="user.email" type="email" disabled
+                            class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-gray-50 text-gray-400 cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 mb-1">Age</label>
+                        <input [(ngModel)]="user.age" type="number"
+                            class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 mb-1">Gender</label>
+                        <select [(ngModel)]="user.gender"
+                            class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 mb-1">Job Type</label>
+                        <input [(ngModel)]="user.jobType" type="text" placeholder="e.g. Student"
+                            class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 mb-1">Work Location</label>
+                        <input [(ngModel)]="user.workLocation" type="text" placeholder="e.g. Home"
+                            class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 mb-1">Working Hours (per day)</label>
+                        <input [(ngModel)]="user.workingHoursPerDay" type="number"
+                            class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 mb-1">Monthly Salary</label>
+                        <input [(ngModel)]="user.monthlySalary" type="number"
                             class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
                     </div>
                 </div>
@@ -183,16 +222,159 @@
                 </div>
             </div>
 
-            <!-- Action Buttons -->
-            <div class="flex justify-end gap-3 pb-8">
-                <a routerLink="/profile"
-                    class="px-6 py-2.5 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
-                    Cancel
-                </a>
-                <button (click)="saveChanges()"
-                    class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-colors">
-                    Save Changes
-                </button>
+            <!-- ════════════════════════════════════════════════════════════ -->
+            <!-- Fitness Profile (required by the AI / doctor)               -->
+            <!-- ════════════════════════════════════════════════════════════ -->
+            <div id="fitness-profile-section"
+                class="bg-white rounded-2xl p-6 shadow-sm border-2 transition-colors"
+                [class.border-indigo-400]="fromAi"
+                [class.border-gray-100]="!fromAi">
+
+                <!-- Header -->
+                <div class="flex items-center gap-3 mb-1">
+                    <i class="fa-solid fa-brain text-indigo-500 text-lg"></i>
+                    <h3 class="text-xl font-bold text-gray-900">Fitness Profile</h3>
+                    <span class="ml-auto text-xs font-semibold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-600">
+                        Required for AI
+                    </span>
+                </div>
+                <p class="text-gray-500 text-sm mb-6">
+                    These fields power the BMI & calorie AI models. Keep them up-to-date for accurate results.
+                </p>
+
+                <form [formGroup]="fitnessForm" class="space-y-5">
+
+                    <!-- Row 1 — Goal + Type -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Fitness Goal</label>
+                            <div class="relative">
+                                <select formControlName="fitnessGoal"
+                                    class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none bg-white">
+                                    @for (g of fitnessGoals; track g.value) {
+                                    <option [value]="g.value">{{ g.label }}</option>
+                                    }
+                                </select>
+                                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Fitness Level</label>
+                            <div class="relative">
+                                <select formControlName="fitnessType"
+                                    class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none bg-white">
+                                    @for (t of fitnessTypes; track t.value) {
+                                    <option [value]="t.value">{{ t.label }}</option>
+                                    }
+                                </select>
+                                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 2 — Lifestyle Activity -->
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 mb-1">Lifestyle Activity Level</label>
+                        <div class="relative">
+                            <select formControlName="lifestyleActivity"
+                                class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none bg-white">
+                                @for (a of lifestyleActivities; track a.value) {
+                                <option [value]="a.value">{{ a.label }}</option>
+                                }
+                            </select>
+                            <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
+                        </div>
+                    </div>
+
+                    <!-- Row 3 — Health Conditions -->
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 mb-2">Health Conditions</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="flex items-center gap-2 cursor-pointer select-none">
+                                <input type="checkbox" formControlName="hasHypertension"
+                                    class="w-4 h-4 rounded accent-indigo-500" />
+                                <span class="text-sm text-gray-700">Hypertension (High Blood Pressure)</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer select-none">
+                                <input type="checkbox" formControlName="hasDiabetes"
+                                    class="w-4 h-4 rounded accent-indigo-500" />
+                                <span class="text-sm text-gray-700">Diabetes</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Row 4 — Available Equipment -->
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 mb-1">
+                            Available Equipment
+                            <span class="text-gray-400 font-normal">(optional — e.g. "dumbbells, resistance bands")</span>
+                        </label>
+                        <input formControlName="availableEquipment" type="text"
+                            placeholder="e.g. dumbbells, barbell, none"
+                            class="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                    </div>
+
+                    <!-- Feedback messages -->
+                    @if (fitnessSaveSuccess) {
+                    <div class="flex items-center gap-2 text-green-600 bg-green-50 border border-green-200 rounded-xl px-4 py-3 text-sm">
+                        <i class="fa-solid fa-circle-check"></i>
+                        Fitness profile saved!
+                        @if (fromAi) { Redirecting you back to the AI page… }
+                    </div>
+                    }
+                    @if (fitnessSaveError) {
+                    <div class="flex items-center gap-2 text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                        {{ fitnessSaveError }}
+                    </div>
+                    }
+
+                    <!-- Save Fitness Profile button -->
+                    <div class="flex justify-end">
+                        <button type="button" (click)="saveFitnessProfile()" [disabled]="isSavingFitness"
+                            class="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white text-sm font-medium transition-colors">
+                            @if (isSavingFitness) {
+                            <i class="fa-solid fa-spinner fa-spin"></i> Saving…
+                            } @else {
+                            <i class="fa-solid fa-brain"></i> Save Fitness Profile
+                            }
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+            <!-- ════════════════════════════════════════════════════════════ -->
+
+            <!-- Action Buttons for the basic profile -->
+            <div class="pb-8">
+                <!-- Feedback messages -->
+                @if (generalSaveSuccess) {
+                <div class="mb-4 flex items-center gap-2 text-green-600 bg-green-50 border border-green-200 rounded-xl px-4 py-3 text-sm">
+                    <i class="fa-solid fa-circle-check"></i>
+                    Profile saved successfully!
+                </div>
+                }
+                @if (generalSaveError) {
+                <div class="mb-4 flex items-center gap-2 text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    {{ generalSaveError }}
+                </div>
+                }
+
+                <div class="flex justify-end gap-3">
+                    <a routerLink="/profile"
+                        class="px-6 py-2.5 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+                        Cancel
+                    </a>
+                    <button (click)="saveChanges()" [disabled]="isSavingGeneral"
+                        class="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white text-sm font-medium transition-colors">
+                        @if (isSavingGeneral) {
+                        <i class="fa-solid fa-spinner fa-spin"></i> Saving...
+                        } @else {
+                        Save Changes
+                        }
+                    </button>
+                </div>
             </div>
 
         </div>
@@ -201,14 +383,13 @@
     <!-- Footer -->
     <footer
         class="border-t border-gray-200 bg-white px-8 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
-        <span class="text-gray-900 font-bold text-lg">AuraFit</span>
+        <span class="text-gray-900 font-bold text-lg">SmartFit</span>
         <div class="flex gap-6 text-gray-400 text-sm">
             <a href="#" class="hover:text-gray-600 transition-colors">Privacy Policy</a>
             <a href="#" class="hover:text-gray-600 transition-colors">Terms of Service</a>
             <a href="#" class="hover:text-gray-600 transition-colors">Contact Support</a>
-            <a href="#" class="hover:text-gray-600 transition-colors">API Documentation</a>
         </div>
-        <span class="text-gray-400 text-xs">© 2024 AuraFit Performance. All rights reserved.</span>
+        <span class="text-gray-400 text-xs">© 2024 SmartFit. All rights reserved.</span>
     </footer>
 
 </div>

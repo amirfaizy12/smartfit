@@ -21,13 +21,14 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   isSubmitting = false;
   errorMessage = '';
+  showPassword = false;
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: [null, [Validators.required, Validators.email]],
       password: [
         null,
-        [Validators.required, Validators.minLength(10)],
+        [Validators.required],
       ],
     });
   }
@@ -47,7 +48,13 @@ export class LoginComponent implements OnInit {
       .login({ email, password })
       .pipe(finalize(() => (this.isSubmitting = false)))
       .subscribe({
-        next: () => this.router.navigate(['/home']),
+        next: () => {
+          if (this.authService.isAdmin()) {
+            this.router.navigate(['/admin/dashboard']);
+          } else {
+            this.router.navigate(['/home']);
+          }
+        },
         error: (error: HttpErrorResponse) => {
           this.errorMessage = getApiErrorMessage(error, 'Login failed. Please check your credentials.');
         },

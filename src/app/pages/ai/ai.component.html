@@ -249,9 +249,17 @@
             <!-- API Error -->
             @if (apiError) {
             <div
-                class="mb-6 flex items-center gap-3 bg-red-50 border border-red-100 text-red-600 text-sm rounded-xl px-4 py-3">
-                <i class="fa-solid fa-circle-exclamation flex-shrink-0"></i>
-                <span>{{ apiError }}</span>
+                class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-red-50 border border-red-100 text-red-600 text-sm rounded-xl px-4 py-3">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-circle-exclamation flex-shrink-0"></i>
+                    <span>{{ apiError }}</span>
+                </div>
+                @if (showProfileRedirect) {
+                <a routerLink="/edite-Profile" [queryParams]="{from: 'ai'}"
+                    class="whitespace-nowrap px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg text-xs transition-colors">
+                    Complete Profile
+                </a>
+                }
             </div>
             }
 

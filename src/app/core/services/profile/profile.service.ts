@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, switchMap, throwError } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { CreateProfileRequest } from '../../models/api.models';
+import { CompleteProfileRequest, CreateProfileRequest } from '../../models/api.models';
 
 @Injectable({ providedIn: 'root' })
 export class ProfileService {
@@ -14,11 +14,11 @@ export class ProfileService {
   }
 
   createProfile(payload: CreateProfileRequest): Observable<unknown> {
-    return this.http.post(this.baseUrl, payload);
+    return this.http.post(this.baseUrl, payload, { responseType: 'text' });
   }
 
   updateProfile(payload: CreateProfileRequest): Observable<unknown> {
-    return this.http.put(this.baseUrl, payload);
+    return this.http.put(this.baseUrl, payload, { responseType: 'text' });
   }
 
   upsertProfile(payload: CreateProfileRequest): Observable<unknown> {
@@ -32,5 +32,9 @@ export class ProfileService {
         return throwError(() => error);
       })
     );
+  }
+
+  completeProfile(payload: CompleteProfileRequest): Observable<unknown> {
+    return this.http.post(`${this.baseUrl}/complete-profile`, payload, { responseType: 'text' });
   }
 }

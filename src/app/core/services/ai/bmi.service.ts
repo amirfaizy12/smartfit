@@ -16,6 +16,7 @@ export class BmiService {
     ).pipe(
       map((response) => {
         const bmi = extractNumericField(response, [
+          'predictedBMI',
           'predictedBmi',
           'predicted_bmi',
           'bmi',

@@ -70,11 +70,17 @@ export interface CreateProfileRequest {
   height: number;
   weight: number;
   gender: Gender;
-  hasHypertension: boolean;
-  hasDiabetes: boolean;
+  hasHypertension: string;
+  hasDiabetes: string;
   fitnessGoal: FitnessGoal;
-  fitnessType?: FitnessType;
-  lifestyleActivity?: LifestyleActivity;
+  fitnessType: FitnessType;
+  availableEquipment: string;
+  jobType: string;
+  workingHoursPerDay: number;
+  workLocation: string;
+  monthlySalary: number;
+  profilePictureUrl: string;
+  lifestyleActivity: LifestyleActivity;
 }
 
 export interface CaloriesPredictionRequest {
@@ -95,3 +101,13 @@ export interface CaloriesAnalysisResult {
   sessionDurationHours: number;
   workoutFrequencyDaysWeek: number;
 }
+
+export interface CompleteProfileRequest {
+  fitnessGoal: FitnessGoal;
+  fitnessType: FitnessType;
+  lifestyleActivity: LifestyleActivity;
+  hasHypertension: boolean;
+  hasDiabetes: boolean;
+  availableEquipment: string;
+}
+

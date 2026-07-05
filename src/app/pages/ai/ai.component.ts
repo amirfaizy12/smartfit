@@ -8,12 +8,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { finalize, switchMap } from 'rxjs';
 import { AuthService } from '../../core/services/auth/auth.service';
 import { BmiService } from '../../core/services/ai/bmi.service';
 import { CaloriesService } from '../../core/services/ai/calories.service';
 import { ProfileService } from '../../core/services/profile/profile.service';
+import { UserProfileService } from '../../core/services/profile/user-profile.service';
 import {
   CreateProfileRequest,
   Gender,
@@ -55,12 +56,15 @@ export class AiComponent {
   private readonly profileService = inject(ProfileService);
   private readonly bmiService = inject(BmiService);
   private readonly caloriesService = inject(CaloriesService);
+  private readonly userProfileService = inject(UserProfileService);
+  private readonly router = inject(Router);
 
   readonly isAuthenticated = this.authService.isAuthenticated;
 
   activeTab: 'bmi' | 'calories' = 'bmi';
   isLoadingBmi = false;
   isLoadingCal = false;
+  showProfileRedirect = false;
 
   bmiResult: BmiResult = {
     key: '',
@@ -144,27 +148,58 @@ export class AiComponent {
 
     this.isLoadingBmi = true;
     this.apiError = '';
+    this.showProfileRedirect = false;
 
     const { Sex, Age, Height_cm, Weight_kg } = this.bmiForm.value;
-    const profilePayload: CreateProfileRequest = {
-      fullName: 'SmartFit User',
-      age: +Age,
-      height: +Height_cm,
-      weight: +Weight_kg,
-      gender: Sex as Gender,
-      hasHypertension: false,
-      hasDiabetes: false,
-      fitnessGoal: 'ImproveFitness',
-      fitnessType: 'Beginner',
-      lifestyleActivity: 'ModeratelyActive',
-    };
+    const currentProfile = this.userProfileService.profile();
 
-    this.profileService
-      .upsertProfile(profilePayload)
-      .pipe(
-        switchMap(() => this.bmiService.predict()),
-        finalize(() => (this.isLoadingBmi = false))
-      )
+    const needsUpdate =
+      !currentProfile ||
+      currentProfile.age !== +Age ||
+      currentProfile.height !== +Height_cm ||
+      currentProfile.weight !== +Weight_kg ||
+      currentProfile.gender !== Sex;
+
+    const predictCall = this.bmiService.predict();
+    
+    let bmiObservable = predictCall;
+
+    if (needsUpdate && currentProfile) {
+      // Create a full payload from current profile combined with new values
+      const profilePayload: CreateProfileRequest = {
+        fullName: currentProfile.fullName || 'User',
+        age: +Age,
+        height: +Height_cm,
+        weight: +Weight_kg,
+        gender: Sex as Gender,
+        hasHypertension: currentProfile.hasHypertension || "false",
+        hasDiabetes: currentProfile.hasDiabetes || "false",
+        fitnessGoal: (currentProfile.fitnessGoal as any) || 'ImproveFitness',
+        fitnessType: (currentProfile.fitnessType as any) || 'Beginner',
+        lifestyleActivity: (currentProfile.lifestyleActivity as any) || 'ModeratelyActive',
+        availableEquipment: currentProfile.availableEquipment || 'none',
+        jobType: currentProfile.jobType || 'None',
+        workingHoursPerDay: currentProfile.workingHoursPerDay || 0,
+        workLocation: currentProfile.workLocation || 'None',
+        monthlySalary: currentProfile.monthlySalary || 0,
+        profilePictureUrl: currentProfile.profilePictureUrl || 'string'
+      };
+
+      // Also patch the signal locally
+      this.userProfileService.patchProfile({
+        age: +Age,
+        height: +Height_cm,
+        weight: +Weight_kg,
+        gender: Sex
+      });
+
+      bmiObservable = this.profileService.upsertProfile(profilePayload).pipe(
+        switchMap(() => predictCall)
+      );
+    }
+
+    bmiObservable
+      .pipe(finalize(() => (this.isLoadingBmi = false)))
       .subscribe({
         next: (result) => {
           this.setBmiResult(result.bmi, result.bodyType, result.healthStatus);
@@ -175,10 +210,19 @@ export class AiComponent {
           }, 100);
         },
         error: (error: HttpErrorResponse) => {
-          this.apiError = getApiErrorMessage(
+          const msg = getApiErrorMessage(
             error,
             'BMI analysis failed. Please complete your profile and try again.'
           );
+          this.apiError = msg;
+          // If the server says profile is incomplete or missing → show the manual redirect button
+          if (
+            msg.toLowerCase().includes('complete your profile') ||
+            msg.toLowerCase().includes('bmi analysis failed') ||
+            msg.toLowerCase().includes('profile not found')
+          ) {
+            this.showProfileRedirect = true;
+          }
         },
       });
   }
@@ -194,10 +238,8 @@ export class AiComponent {
       return;
     }
 
-    if (!this.bmiResult.value) {
-      this.apiError = 'Please run BMI Analysis first — it is required for calorie prediction.';
-      return;
-    }
+
+
 
     this.isLoadingCal = true;
     this.apiError = '';

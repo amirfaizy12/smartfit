@@ -1,1 +1,205 @@
-<p>dashboard works!</p>
+<div class="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8 font-sans mt-20">
+  <div class="max-w-7xl mx-auto space-y-8">
+
+    <!-- Header -->
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900 tracking-tight">
+        Welcome back, <span class="text-blue-600">{{ dashboardData?.fullName || 'User' }}</span>
+      </h1>
+      <p class="text-gray-500 mt-1">Overview of your fitness journey and AI insights.</p>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="flex justify-center items-center py-20">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="bg-red-50 text-red-600 p-4 rounded-xl">
+      <i class="fa-solid fa-circle-exclamation mr-2"></i> {{ error }}
+    </div>
+
+    <!-- Dashboard Content -->
+    <div *ngIf="!isLoading && dashboardData" class="space-y-6">
+
+      <!-- Top Metrics Row -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- BMI Card -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-gray-500">Current BMI</p>
+            <h3 class="text-2xl font-bold text-gray-900 mt-1">{{ dashboardData.currentBMI ? (dashboardData.currentBMI | number:'1.1-1') : '--' }}</h3>
+            <p class="text-xs mt-1 font-medium px-2 py-0.5 rounded-full inline-block"
+               [ngClass]="{
+                 'bg-blue-50 text-blue-700': dashboardData.healthStatus === 'Underweight',
+                 'bg-green-50 text-green-700': dashboardData.healthStatus === 'Balanced' || dashboardData.healthStatus === 'Normal',
+                 'bg-amber-50 text-amber-700': dashboardData.healthStatus === 'Overweight',
+                 'bg-red-50 text-red-700': dashboardData.healthStatus === 'Obese'
+               }">
+              {{ dashboardData.healthStatus || 'N/A' }}
+            </p>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 text-xl">
+            <i class="fa-solid fa-weight-scale"></i>
+          </div>
+        </div>
+
+        <!-- Weight Card -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-gray-500">Current Weight</p>
+            <h3 class="text-2xl font-bold text-gray-900 mt-1">{{ dashboardData.currentWeight || '--' }} <span class="text-sm font-normal text-gray-400">kg</span></h3>
+            <p class="text-xs mt-1 text-gray-400">{{ dashboardData.bodyType || '' }}</p>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center text-purple-600 text-xl">
+            <i class="fa-solid fa-scale-balanced"></i>
+          </div>
+        </div>
+
+        <!-- Workouts Card -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-gray-500">Total Workouts</p>
+            <h3 class="text-2xl font-bold text-gray-900 mt-1">{{ dashboardData.statistics?.totalWorkouts || 0 }}</h3>
+            <p class="text-xs mt-1 text-gray-400">{{ dashboardData.workoutSummary?.totalDurationMinutes || 0 }} min total</p>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 text-xl">
+            <i class="fa-solid fa-dumbbell"></i>
+          </div>
+        </div>
+
+        <!-- Calories Card -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-gray-500">Latest Burn</p>
+            <h3 class="text-2xl font-bold text-gray-900 mt-1">{{ dashboardData.latestPredictedCalories ? (dashboardData.latestPredictedCalories | number:'1.0-0') : '0' }} <span class="text-sm font-normal text-gray-400">kcal</span></h3>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-orange-50 flex items-center justify-center text-orange-600 text-xl">
+            <i class="fa-solid fa-fire"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content Area -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Chart Column (Takes up 2/3 on large screens) -->
+        <div class="lg:col-span-2 space-y-6">
+
+          <!-- Weight Chart -->
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="font-bold text-gray-900">Weight Progress</h3>
+            </div>
+            <div class="h-[300px] w-full">
+              <div *ngIf="!dashboardData.weightProgress || dashboardData.weightProgress.length === 0" class="h-full flex flex-col items-center justify-center text-gray-400">
+                <i class="fa-solid fa-chart-line text-4xl mb-3 text-gray-300"></i>
+                <p>Not enough weight history yet.</p>
+                <p class="text-xs mt-1">Update your profile to start tracking.</p>
+              </div>
+              <canvas *ngIf="dashboardData.weightProgress && dashboardData.weightProgress.length > 0" id="dashWeightChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Workout Analysis -->
+          <div *ngIf="dashboardData.workoutSummaryText || dashboardData.workoutAnalysis" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h3 class="font-bold text-gray-900 mb-4"><i class="fa-solid fa-chart-bar mr-2 text-indigo-500"></i>Workout Summary</h3>
+            <p class="text-gray-600 text-sm leading-relaxed break-words whitespace-pre-wrap" *ngIf="dashboardData.workoutSummaryText">{{ dashboardData.workoutSummaryText }}</p>
+            <p class="text-gray-600 text-sm leading-relaxed mt-2 break-words whitespace-pre-wrap" *ngIf="dashboardData.workoutAnalysis">{{ dashboardData.workoutAnalysis }}</p>
+          </div>
+
+          <!-- Statistics Grid -->
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 text-center">
+              <p class="text-2xl font-bold text-blue-600">{{ dashboardData.statistics?.totalBMIAnalyses || 0 }}</p>
+              <p class="text-xs text-gray-500 mt-1">BMI Analyses</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 text-center">
+              <p class="text-2xl font-bold text-green-600">{{ dashboardData.statistics?.totalMeals || 0 }}</p>
+              <p class="text-xs text-gray-500 mt-1">Meals Logged</p>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 text-center">
+              <p class="text-2xl font-bold text-orange-600">{{ dashboardData.statistics?.totalCaloriesBurned || 0 }}</p>
+              <p class="text-xs text-gray-500 mt-1">Total Burned (kcal)</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar Column -->
+        <div class="space-y-6">
+          <!-- Exercise Recommendation -->
+          <div class="bg-gradient-to-br from-indigo-600 to-blue-700 rounded-2xl shadow-sm p-6 text-white relative overflow-hidden">
+            <div class="absolute right-0 top-0 opacity-10 transform translate-x-4 -translate-y-4">
+              <i class="fa-solid fa-person-running text-8xl"></i>
+            </div>
+            <div class="relative z-10">
+              <div class="flex items-center gap-2 mb-3">
+                <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+                  <i class="fa-solid fa-bolt text-sm"></i>
+                </div>
+                <h3 class="font-bold text-lg">AI Exercise Plan</h3>
+              </div>
+              <p class="text-indigo-100 text-sm leading-relaxed">
+                {{ dashboardData.latestExerciseRecommendation || 'No exercise recommendation yet. Run your AI analysis to get a personalized plan!' }}
+              </p>
+            </div>
+          </div>
+
+          <!-- Diet Recommendation -->
+          <div class="bg-gradient-to-br from-emerald-600 to-green-700 rounded-2xl shadow-sm p-6 text-white relative overflow-hidden">
+            <div class="absolute right-0 top-0 opacity-10 transform translate-x-4 -translate-y-4">
+              <i class="fa-solid fa-apple-whole text-8xl"></i>
+            </div>
+            <div class="relative z-10">
+              <div class="flex items-center gap-2 mb-3">
+                <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+                  <i class="fa-solid fa-leaf text-sm"></i>
+                </div>
+                <h3 class="font-bold text-lg">AI Diet Plan</h3>
+              </div>
+              <p class="text-emerald-100 text-sm leading-relaxed">
+                {{ dashboardData.latestDietRecommendation || 'No diet recommendation yet. Run your AI analysis to get a personalized plan!' }}
+              </p>
+            </div>
+          </div>
+
+          <!-- Water Tracking -->
+          <div *ngIf="dashboardData.waterTracking" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <i class="fa-solid fa-droplet text-blue-500"></i>
+              <h3 class="font-bold text-gray-900">Water Tracking</h3>
+            </div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm text-gray-500">Progress</span>
+              <span class="text-sm font-bold text-blue-600">{{ dashboardData.waterTracking.consumedMl }} / {{ dashboardData.waterTracking.dailyGoalMl }} ml</span>
+            </div>
+            <div class="w-full bg-gray-100 rounded-full h-3">
+              <div class="bg-blue-500 h-3 rounded-full transition-all duration-500" [style.width.%]="dashboardData.waterTracking.completionPercentage"></div>
+            </div>
+            <p class="text-xs text-gray-400 mt-2">{{ dashboardData.waterTracking.remainingMl }} ml remaining</p>
+          </div>
+
+          <!-- Lifestyle Summary -->
+          <div *ngIf="dashboardData.lifestyleSummary" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h3 class="font-bold text-gray-900 mb-4"><i class="fa-solid fa-list-check mr-2 text-green-500"></i>Lifestyle Tasks</h3>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm text-gray-500">Completion</span>
+              <span class="text-sm font-bold text-green-600">{{ dashboardData.lifestyleSummary.completedTasks }} / {{ dashboardData.lifestyleSummary.totalTasks }}</span>
+            </div>
+            <div class="w-full bg-gray-100 rounded-full h-3 mb-4">
+              <div class="bg-green-500 h-3 rounded-full transition-all duration-500" [style.width.%]="dashboardData.lifestyleSummary.completionRate"></div>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-xs text-gray-500">
+              <div class="flex items-center gap-1"><i class="fa-solid fa-droplet text-blue-400"></i> Water: {{ dashboardData.lifestyleSummary.waterTasks }}</div>
+              <div class="flex items-center gap-1"><i class="fa-solid fa-moon text-indigo-400"></i> Sleep: {{ dashboardData.lifestyleSummary.sleepTasks }}</div>
+              <div class="flex items-center gap-1"><i class="fa-solid fa-dumbbell text-orange-400"></i> Workout: {{ dashboardData.lifestyleSummary.workoutTasks }}</div>
+              <div class="flex items-center gap-1"><i class="fa-solid fa-person-walking text-green-400"></i> Walking: {{ dashboardData.lifestyleSummary.walkingTasks }}</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

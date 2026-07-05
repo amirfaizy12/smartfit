@@ -30,7 +30,7 @@
             <!-- Profile Card -->
             <div class="bg-white rounded-2xl p-6 shadow-sm text-center">
                 <div class="relative w-32 h-32 mx-auto mb-4">
-                    <img [src]="user.avatar" alt="avatar"
+                    <img [src]="avatarUrl()" alt="avatar"
                         class="w-full h-full rounded-full object-cover border-4 border-white shadow-md" />
 
                     <!-- Hidden File Input -->
@@ -42,11 +42,20 @@
                         <i class="fa-solid fa-camera text-xs"></i>
                     </button>
                 </div>
-                <h2 class="text-2xl font-bold text-gray-900">{{ user.name }}</h2>
+                <h2 class="text-2xl font-bold text-gray-900">{{ displayName() }}</h2>
                 <p class="text-blue-500 text-sm font-medium mt-1 flex items-center justify-center gap-1">
-                    <i class="fa-solid fa-medal text-xs"></i> {{ user.badge }}
+                    <i class="fa-solid fa-medal text-xs"></i>
+                    @if (profile()?.fitnessGoal) { {{ profile()?.fitnessGoal }} } @else { SmartFit Member }
                 </p>
-                <p class="text-gray-500 text-sm mt-3 leading-relaxed">{{ user.bio }}</p>
+                <p class="text-gray-500 text-sm mt-3 leading-relaxed">
+                  @if (profile()?.gender || profile()?.age) {
+                    {{ profile()?.gender ?? '' }}{{ profile()?.age ? ' · ' + profile()?.age + ' yrs' : '' }}
+                    {{ profile()?.height ? ' · ' + profile()?.height + ' cm' : '' }}
+                    {{ profile()?.weight ? ' · ' + profile()?.weight + ' kg' : '' }}
+                  } @else {
+                    Complete your profile to see your stats here.
+                  }
+                </p>
                 <a routerLink="/edite-Profile"
                     class="mt-5 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-xl flex items-center justify-center gap-2 transition-colors">
                     <i class="fa-solid fa-pen text-xs"></i> Edit Profile
