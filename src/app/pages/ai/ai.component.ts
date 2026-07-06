@@ -161,31 +161,29 @@ export class AiComponent {
       currentProfile.gender !== Sex;
 
     const predictCall = this.bmiService.predict();
-    
+
     let bmiObservable = predictCall;
 
-    if (needsUpdate && currentProfile) {
-      // Create a full payload from current profile combined with new values
+    if (needsUpdate) {
       const profilePayload: CreateProfileRequest = {
-        fullName: currentProfile.fullName || 'User',
+        fullName: currentProfile?.fullName || 'User',
         age: +Age,
         height: +Height_cm,
         weight: +Weight_kg,
         gender: Sex as Gender,
-        hasHypertension: currentProfile.hasHypertension || "false",
-        hasDiabetes: currentProfile.hasDiabetes || "false",
-        fitnessGoal: (currentProfile.fitnessGoal as any) || 'ImproveFitness',
-        fitnessType: (currentProfile.fitnessType as any) || 'Beginner',
-        lifestyleActivity: (currentProfile.lifestyleActivity as any) || 'ModeratelyActive',
-        availableEquipment: currentProfile.availableEquipment || 'none',
-        jobType: currentProfile.jobType || 'None',
-        workingHoursPerDay: currentProfile.workingHoursPerDay || 0,
-        workLocation: currentProfile.workLocation || 'None',
-        monthlySalary: currentProfile.monthlySalary || 0,
-        profilePictureUrl: currentProfile.profilePictureUrl || 'string'
+        hasHypertension: currentProfile?.hasHypertension || "false",
+        hasDiabetes: currentProfile?.hasDiabetes || "false",
+        fitnessGoal: (currentProfile?.fitnessGoal as any) || 'ImproveFitness',
+        fitnessType: (currentProfile?.fitnessType as any) || 'Beginner',
+        lifestyleActivity: (currentProfile?.lifestyleActivity as any) || 'ModeratelyActive',
+        availableEquipment: currentProfile?.availableEquipment || 'none',
+        jobType: currentProfile?.jobType || 'None',
+        workingHoursPerDay: currentProfile?.workingHoursPerDay || 0,
+        workLocation: currentProfile?.workLocation || 'None',
+        monthlySalary: currentProfile?.monthlySalary || 0,
+        profilePictureUrl: currentProfile?.profilePictureUrl || 'string'
       };
 
-      // Also patch the signal locally
       this.userProfileService.patchProfile({
         age: +Age,
         height: +Height_cm,

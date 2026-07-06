@@ -21,19 +21,29 @@ export class ProfileService {
     return this.http.put(this.baseUrl, payload, { responseType: 'text' });
   }
 
+  private isProfileMissing(error: any): boolean {
+    const rawMessage = error?.error?.message ?? error?.error?.Message ?? error?.error ?? '';
+    const message = typeof rawMessage === 'string' ? rawMessage.toLowerCase() : JSON.stringify(rawMessage).toLowerCase();
+
+    return (
+      error?.status === 404 ||
+      message.includes('profile not found') ||
+      message.includes('not found') ||
+      message.includes('does not exist')
+    );
+  }
+
   upsertProfile(payload: CreateProfileRequest): Observable<unknown> {
     return this.getProfile().pipe(
       switchMap(() => this.updateProfile(payload)),
       catchError((error) => {
-        if (error.status === 404) {
+        if (this.isProfileMissing(error)) {
           return this.createProfile(payload);
         }
-
         return throwError(() => error);
       })
     );
   }
-
   completeProfile(payload: CompleteProfileRequest): Observable<unknown> {
     return this.http.post(`${this.baseUrl}/complete-profile`, payload, { responseType: 'text' });
   }
